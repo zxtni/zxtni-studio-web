@@ -1,0 +1,5267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zxtni Studio — Web &amp; App Engineering</title>
+    <meta
+      name="description"
+      content="Zxtni Studio is a web and mobile app development agency building high-craft digital products, scalable platforms, and custom software systems."
+    />
+    <meta property="og:title" content="Zxtni Studio — Web & App Engineering" />
+    <meta
+      property="og:description"
+      content="Zxtni Studio is a web and mobile app development agency building high-craft digital products, scalable platforms, and custom software systems."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      @font-face {
+        font-family: 'Inter Tight';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/inter-tight@latest/latin-400-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter Tight';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/inter-tight@latest/latin-500-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter Tight';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/inter-tight@latest/latin-600-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Kaushan Script';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/kaushan-script@latest/latin-400-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Unbounded';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/unbounded@latest/latin-700-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Syncopate';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/syncopate@latest/latin-700-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Michroma';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/michroma@latest/latin-400-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Archivo Black';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/fontsource/fonts/archivo-black@latest/latin-400-normal.woff2') format('woff2');
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --ink: #111418;
+        --bg: #f4f7fb;
+        --pill: rgba(234, 239, 246, 0.82);
+        --panel: #12151b;
+        --u: calc(100vw / 1536);
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      section[id] {
+        scroll-margin-top: calc(104 * var(--u));
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Inter Tight', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2.5px;
+        background: linear-gradient(90deg, #1430e0 0%, #ff5512 100%);
+        transform-origin: left center;
+        transform: scaleX(0);
+        z-index: 45;
+        pointer-events: none;
+        will-change: transform;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        background: none;
+        border: none;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid #16191f;
+        outline-offset: 2px;
+      }
+
+      /* ── Loader ─────────────────────────────────────────────────────────────── */
+      .loader {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background: var(--bg);
+        display: grid;
+        place-items: center;
+        clip-path: inset(0 0 0 0);
+      }
+
+      .loader-line-wrap {
+        overflow: hidden;
+        padding: 0 24px;
+      }
+
+      .loader-line {
+        display: inline-block;
+        font-weight: 500;
+        font-size: calc(34 * var(--u));
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        transform: translateY(110%);
+      }
+
+      /* ── Fixed Header ───────────────────────────────────────────────────────── */
+      .site-header {
+        position: fixed;
+        top: calc(24 * var(--u));
+        left: calc(90 * var(--u));
+        right: calc(90 * var(--u));
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        pointer-events: none;
+        z-index: 20;
+      }
+
+      .header-pill {
+        height: calc(64 * var(--u));
+        border-radius: calc(16 * var(--u));
+        background: var(--pill);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+      }
+
+      .pill-left {
+        width: calc(756 * var(--u));
+        padding: 0 calc(22 * var(--u));
+        overflow: hidden;
+        transition: width 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+      }
+
+      .site-header.is-compact .pill-left {
+        width: calc(268 * var(--u));
+      }
+
+      .brand-logo {
+        font-family: 'Kaushan Script', cursive;
+        font-size: calc(30 * var(--u));
+        line-height: 1;
+        letter-spacing: -0.01em;
+        transform: skewX(-6deg);
+        display: inline-flex;
+        align-items: baseline;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .brand-dot {
+        width: calc(4 * var(--u));
+        height: calc(4 * var(--u));
+        border-radius: 50%;
+        background: currentColor;
+        margin-left: calc(3 * var(--u));
+        flex-shrink: 0;
+      }
+
+      .header-nav {
+        margin-left: calc(46 * var(--u));
+        display: flex;
+        align-items: center;
+        gap: calc(24 * var(--u));
+        font-size: calc(18 * var(--u));
+        color: #1e2128;
+        white-space: nowrap;
+        transition: opacity 0.35s ease;
+      }
+
+      .header-nav a {
+        transition: opacity 0.2s ease;
+      }
+
+      .header-nav a:hover {
+        opacity: 0.55;
+      }
+
+      .site-header.is-compact .header-nav {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .more-btn {
+        margin-left: auto;
+        width: calc(30 * var(--u));
+        height: calc(30 * var(--u));
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        border-radius: calc(8 * var(--u));
+        transition: background-color 0.2s ease, opacity 0.2s ease;
+      }
+
+      .more-btn:hover {
+        opacity: 0.65;
+      }
+
+      .more-btn svg {
+        width: calc(4 * var(--u));
+        height: calc(16 * var(--u));
+        display: block;
+      }
+
+      .pill-right {
+        height: calc(60 * var(--u));
+        margin-top: calc(2 * var(--u));
+        padding: 0 calc(13 * var(--u)) 0 calc(22 * var(--u));
+        gap: calc(18 * var(--u));
+        font-size: calc(18 * var(--u));
+        white-space: nowrap;
+      }
+
+      .contact-link {
+        transition: opacity 0.2s ease;
+      }
+
+      .contact-link:hover {
+        opacity: 0.55;
+      }
+
+      .try-chip {
+        background: #16191f;
+        color: #fafafa;
+        border-radius: calc(9 * var(--u));
+        padding: calc(8 * var(--u)) calc(16 * var(--u));
+        transition: background-color 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .try-chip:hover {
+        background: #2b3140;
+      }
+
+      .more-menu {
+        position: fixed;
+        top: calc(96 * var(--u));
+        left: calc(90 * var(--u));
+        background: rgba(234, 239, 246, 0.96);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: calc(14 * var(--u));
+        padding: calc(10 * var(--u));
+        box-shadow: 0 18px 40px rgba(20, 30, 55, 0.14);
+        display: flex;
+        flex-direction: column;
+        gap: calc(4 * var(--u));
+        min-width: calc(200 * var(--u));
+        z-index: 25;
+      }
+
+      .more-menu[hidden] {
+        display: none;
+      }
+
+      .more-menu a {
+        padding: calc(8 * var(--u)) calc(14 * var(--u));
+        border-radius: calc(8 * var(--u));
+        font-size: calc(16 * var(--u));
+        color: #1e2128;
+        transition: background-color 0.15s ease;
+      }
+
+      .more-menu a:hover {
+        background: rgba(17, 20, 24, 0.06);
+      }
+
+      /* ── Section 1: Hero ────────────────────────────────────────────────────── */
+      .hero {
+        --u: min(calc(100vw / 1536), calc(100vh / 864));
+        position: relative;
+        height: 100vh;
+        min-height: 560px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #dbe3ee 0%, #eef2f8 62%, #f4f7fb 100%);
+      }
+
+      .hero-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: calc(40 * var(--u));
+        padding: 0 calc(90 * var(--u)) calc(64 * var(--u));
+        pointer-events: none;
+      }
+
+      .hero-headline {
+        font-weight: 500;
+        font-size: calc(128 * var(--u));
+        line-height: 0.94;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        text-align: left;
+      }
+
+      .line-mask {
+        display: block;
+        overflow: hidden;
+        padding-bottom: 0.08em;
+        margin-bottom: -0.08em;
+        white-space: nowrap;
+      }
+
+      .line-inner {
+        display: inline-block;
+      }
+
+      .hero-right {
+        padding-bottom: calc(10 * var(--u));
+        text-align: left;
+        flex-shrink: 0;
+      }
+
+      .hero-subtitle {
+        font-weight: 400;
+        font-size: calc(23.5 * var(--u));
+        letter-spacing: 0.01em;
+        line-height: 1.15;
+        color: var(--ink);
+      }
+
+      .hero-cta {
+        pointer-events: auto;
+        margin-top: calc(28 * var(--u));
+        height: calc(48 * var(--u));
+        padding: 0 calc(29 * var(--u));
+        border-radius: calc(13 * var(--u));
+        background: #16191f;
+        color: #ffffff;
+        font-size: calc(16 * var(--u));
+        letter-spacing: 0.02em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.2s ease;
+      }
+
+      .hero-cta:hover {
+        transform: scale(1.05);
+        background: #2b3140;
+      }
+
+      /* ── Section 2: Logo Ticker ─────────────────────────────────────────────── */
+      .ticker-section {
+        padding: calc(72 * var(--u)) 0 calc(40 * var(--u));
+      }
+
+      .ticker-caption {
+        text-align: center;
+        font-size: calc(20.66 * var(--u));
+        letter-spacing: 0.033em;
+        color: rgba(15, 20, 30, 0.38);
+        font-weight: 400;
+      }
+
+      .marquee {
+        margin-top: calc(52 * var(--u));
+        overflow: hidden;
+        width: 100%;
+        mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+      }
+
+      .marquee-track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+      }
+
+      .logo-list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: calc(96 * var(--u));
+        padding-right: calc(96 * var(--u));
+        color: #0c0e12;
+        font-size: calc(30 * var(--u));
+        line-height: 1;
+      }
+
+      .logo-item {
+        height: calc(48 * var(--u));
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .wm-veltrix {
+        font-family: 'Archivo Black', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+      }
+
+      .wm-kinetiq {
+        font-family: 'Unbounded', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .wm-syntra {
+        font-family: 'Syncopate', sans-serif;
+        font-weight: 700;
+        font-size: calc(26 * var(--u));
+        letter-spacing: 0.04em;
+      }
+
+      .wm-orbital {
+        font-family: 'Michroma', sans-serif;
+        font-weight: 400;
+        font-size: calc(25 * var(--u));
+        letter-spacing: 0.06em;
+      }
+
+      .wm-velox {
+        font-family: 'Inter Tight', sans-serif;
+        font-weight: 400;
+        font-size: calc(28 * var(--u));
+        letter-spacing: 0.42em;
+      }
+
+      .wm-finstack {
+        font-family: 'Inter Tight', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+
+      .wm-modulo {
+        font-family: 'Unbounded', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .wm-looma {
+        font-family: 'Archivo Black', sans-serif;
+        text-transform: uppercase;
+      }
+
+      /* ── Section 3: Sprint Timeline -> Statement ────────────────────────────── */
+      .editor-section {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tl-wrap {
+        padding: calc(150 * var(--u)) calc(68 * var(--u)) calc(60 * var(--u));
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        perspective: 1400px;
+      }
+
+      .tl-box {
+        position: relative;
+        width: 100%;
+        max-width: calc(1400 * var(--u));
+        aspect-ratio: 1372 / 500;
+        transform-style: preserve-3d;
+        will-change: transform, opacity;
+      }
+
+      .tl-panel {
+        position: absolute;
+        inset: 0;
+        border-radius: calc(44 * var(--u));
+        background: var(--panel);
+        box-shadow:
+          0 calc(40 * var(--u)) calc(70 * var(--u)) rgba(40, 60, 110, 0.22),
+          0 calc(6 * var(--u)) calc(14 * var(--u)) rgba(20, 30, 60, 0.18);
+      }
+
+      .tl-pause {
+        position: absolute;
+        left: 1.7%;
+        top: 4.4%;
+        width: calc(40 * var(--u));
+        height: calc(40 * var(--u));
+        border-radius: calc(11 * var(--u));
+        background: #2a2f39;
+        display: grid;
+        place-items: center;
+        z-index: 3;
+        transition: background-color 0.2s ease;
+      }
+
+      .tl-pause:hover {
+        background: #363c48;
+      }
+
+      .tl-pause:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+      }
+
+      .tl-pause svg {
+        width: calc(11 * var(--u));
+        height: calc(12 * var(--u));
+        display: block;
+      }
+
+      .tl-ruler {
+        position: absolute;
+        left: 8%;
+        right: 2.4%;
+        top: 5.2%;
+        height: calc(28 * var(--u));
+        pointer-events: none;
+      }
+
+      .ruler-label {
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(12 * var(--u));
+        font-weight: 600;
+        color: #8d97a8;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        transition: color 0.18s ease;
+      }
+
+      .ruler-label.is-active {
+        color: #ffffff;
+      }
+
+      .ruler-tick {
+        position: absolute;
+        top: calc(3 * var(--u));
+        width: 1px;
+        height: calc(10 * var(--u));
+        background: rgba(255, 255, 255, 0.22);
+        transform: translateX(-50%);
+      }
+
+      .tl-lane {
+        position: absolute;
+        left: 8%;
+        right: 2.4%;
+        height: 33%;
+        border-radius: calc(14 * var(--u));
+        background: rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding: 0 calc(20 * var(--u));
+        pointer-events: none;
+      }
+
+      .tl-lane-v1 {
+        top: 16%;
+      }
+
+      .tl-lane-v2 {
+        top: 56%;
+      }
+
+      .tl-code {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: calc(5 * var(--u));
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(10.5 * var(--u));
+        line-height: 1.25;
+        color: rgba(164, 176, 196, 0.36);
+        white-space: nowrap;
+        user-select: none;
+      }
+
+      .tl-code-row {
+        display: flex;
+        align-items: center;
+        gap: calc(14 * var(--u));
+      }
+
+      .tl-ln {
+        color: rgba(141, 151, 168, 0.24);
+        font-variant-numeric: tabular-nums;
+        min-width: 2ch;
+      }
+
+      .tok-kw { color: rgba(114, 159, 255, 0.46); }
+      .tok-fn { color: rgba(226, 235, 248, 0.42); }
+      .tok-str { color: rgba(255, 132, 77, 0.46); }
+      .tok-ty { color: rgba(110, 231, 183, 0.38); }
+
+      .tl-track-label {
+        position: absolute;
+        left: 2%;
+        transform: translateY(-50%);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(11.5 * var(--u));
+        font-weight: 600;
+        color: #8d97a8;
+        letter-spacing: 0.01em;
+        pointer-events: none;
+      }
+
+      .tl-track-label-v1 {
+        top: 32.5%;
+      }
+
+      .tl-track-label-v2 {
+        top: 72.5%;
+      }
+
+      .clip-slot {
+        position: absolute;
+        height: 28%;
+        aspect-ratio: 1 / 1;
+      }
+
+      .clip-slot-0 { left: 9.5%;  top: 18.5%; }
+      .clip-slot-1 { left: 22.9%; top: 58.5%; }
+      .clip-slot-2 { left: 34.1%; top: 18.5%; }
+      .clip-slot-3 { left: 50.6%; top: 58.5%; }
+      .clip-slot-4 { left: 66.2%; top: 18.5%; }
+
+      .clip-block {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        will-change: transform;
+      }
+
+      .clip-inner {
+        width: 100%;
+        height: 100%;
+        will-change: transform;
+      }
+
+      .tile {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        container-type: inline-size;
+        clip-path: url(#squircle-clip);
+        background-color: #161a24;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+      }
+
+      .tile-0 { background-image: url('/src/assets/images/neurovita_mobile_app_1794730507906.jpg'); }
+      .tile-1 { background-image: url('/src/assets/images/neurovita_web_platform_1794730508337.jpg'); }
+      .tile-2 { background-image: url('/src/assets/images/neurovita_ai_neural_1794730508691.jpg'); }
+      .tile-3 { background-image: url('/src/assets/images/neurovita_design_system_1794730508948.jpg'); }
+      .tile-4 { background-image: url('/src/assets/images/neurovita_cloud_deploy_1794730509465.jpg'); }
+
+      .tile::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 22.4%;
+        pointer-events: none;
+        box-shadow: inset 0 0 15cqw rgba(255, 255, 255, 0.52);
+      }
+
+      .tile canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+      }
+
+      .tile canvas.is-ready {
+        opacity: 1;
+      }
+
+      .playhead {
+        position: absolute;
+        top: 12.5%;
+        bottom: 4.5%;
+        left: calc(8% + 89.6% * 2.4 / 6);
+        width: calc(2 * var(--u));
+        background: #ff5512;
+        z-index: 2;
+        pointer-events: none;
+        transform: translateX(-50%);
+      }
+
+      .playhead-pill {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ff5512;
+        color: #ffffff;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(11 * var(--u));
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        padding: calc(5 * var(--u)) calc(7 * var(--u));
+        border-radius: calc(6 * var(--u));
+        white-space: nowrap;
+        line-height: 1;
+      }
+
+      /* ── Statement ──────────────────────────────────────────────────────────── */
+      .statement-wrap {
+        padding: calc(120 * var(--u)) calc(90 * var(--u)) calc(170 * var(--u));
+        text-align: center;
+      }
+
+      .statement-heading {
+        font-weight: 500;
+        font-size: calc(57.2 * var(--u));
+        line-height: 1.08;
+        letter-spacing: -0.012em;
+        max-width: 31.5ch;
+        margin: 0 auto;
+        color: var(--ink);
+      }
+
+      .stmt-slot {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        margin: 0.1em 0.2em -0.15em 0.2em;
+        vertical-align: baseline;
+      }
+
+      /* ── Section 4: Systems 3D Spatial Architecture Stage ─────────────────── */
+      .portal-section {
+        padding: calc(40 * var(--u)) calc(44 * var(--u)) calc(120 * var(--u));
+        position: relative;
+        perspective: 1600px;
+      }
+
+      .portal-shell {
+        background: radial-gradient(circle at 75% 25%, #18233d 0%, #0d1118 65%);
+        color: #f4f7fb;
+        border-radius: calc(44 * var(--u));
+        padding: calc(88 * var(--u)) calc(76 * var(--u));
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        box-shadow: 0 calc(40 * var(--u)) calc(90 * var(--u)) rgba(15, 22, 38, 0.28);
+        transform-origin: center top;
+        will-change: transform;
+        overflow: hidden;
+      }
+
+      .portal-grid {
+        max-width: calc(1300 * var(--u));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: calc(64 * var(--u));
+        align-items: center;
+      }
+
+      .portal-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(34 * var(--u));
+      }
+
+      .portal-kicker {
+        font-size: calc(14 * var(--u));
+        font-weight: 500;
+        color: #9aa5b8;
+        letter-spacing: 0.02em;
+        margin-bottom: calc(14 * var(--u));
+      }
+
+      .portal-heading {
+        font-weight: 500;
+        font-size: calc(54 * var(--u));
+        line-height: 1.04;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+        text-wrap: balance;
+      }
+
+      .portal-sub {
+        margin-top: calc(16 * var(--u));
+        font-size: calc(18.5 * var(--u));
+        line-height: 1.45;
+        color: #9aa5b8;
+        max-width: 42ch;
+      }
+
+      .sys-list {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .sys-tab {
+        width: 100%;
+        text-align: left;
+        padding: calc(20 * var(--u)) calc(8 * var(--u));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: grid;
+        grid-template-columns: calc(44 * var(--u)) 1fr auto;
+        align-items: center;
+        gap: calc(16 * var(--u));
+        transition: opacity 0.2s ease, background-color 0.2s ease;
+      }
+
+      .sys-tab:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .sys-tab:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: -2px;
+      }
+
+      .sys-num {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(14 * var(--u));
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: #6f7b91;
+        transition: color 0.2s ease;
+      }
+
+      .sys-tab.is-active .sys-num {
+        color: #ff6a2b;
+      }
+
+      .sys-meta {
+        display: flex;
+        flex-direction: column;
+        gap: calc(4 * var(--u));
+      }
+
+      .sys-title {
+        font-size: calc(22 * var(--u));
+        font-weight: 500;
+        color: #9aa5b8;
+        transition: color 0.2s ease;
+      }
+
+      .sys-tab.is-active .sys-title {
+        color: #ffffff;
+      }
+
+      .sys-brief {
+        font-size: calc(14.5 * var(--u));
+        color: #7c879c;
+      }
+
+      .sys-arrow {
+        font-size: calc(18 * var(--u));
+        color: #6f7b91;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      .sys-tab.is-active .sys-arrow {
+        color: #ffffff;
+        transform: translateX(calc(4 * var(--u)));
+      }
+
+      /* 3D Spatial Architecture Stack */
+      .sys-stage-perspective {
+        perspective: 1400px;
+        position: relative;
+        min-height: calc(580 * var(--u));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sys-stack-3d {
+        position: relative;
+        width: 100%;
+        height: calc(560 * var(--u));
+        transform-style: preserve-3d;
+        transition: transform 0.18s ease-out;
+        will-change: transform;
+      }
+
+      .sys-layer-canvas {
+        position: absolute;
+        inset: 0;
+        border-radius: calc(28 * var(--u));
+        background: rgba(15, 22, 38, 0.92);
+        border: 1px solid rgba(114, 159, 255, 0.34);
+        overflow: hidden;
+        transform: translateZ(calc(-54 * var(--u))) translateY(calc(-20 * var(--u))) translateX(calc(-18 * var(--u)));
+        box-shadow: 0 calc(28 * var(--u)) calc(60 * var(--u)) rgba(0, 0, 0, 0.5);
+      }
+
+      .sys-layer-canvas canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .sys-layer-media {
+        position: absolute;
+        inset: calc(24 * var(--u)) calc(18 * var(--u)) calc(90 * var(--u)) calc(24 * var(--u));
+        border-radius: calc(26 * var(--u));
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: #131824;
+        transform: translateZ(0px);
+        box-shadow: 0 calc(32 * var(--u)) calc(64 * var(--u)) rgba(5, 8, 16, 0.6);
+      }
+
+      .sys-layer-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      }
+
+      .sys-stage-perspective:hover .sys-layer-media img {
+        transform: scale(1.04);
+      }
+
+      .sys-media-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(13, 17, 24, 0.88) 0%, rgba(13, 17, 24, 0.12) 55%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .sys-layer-glass {
+        position: absolute;
+        left: calc(44 * var(--u));
+        right: 0;
+        bottom: 0;
+        border-radius: calc(24 * var(--u));
+        background: rgba(20, 26, 38, 0.86);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: calc(26 * var(--u)) calc(30 * var(--u));
+        display: flex;
+        flex-direction: column;
+        gap: calc(12 * var(--u));
+        transform: translateZ(calc(48 * var(--u)));
+        box-shadow: 0 calc(24 * var(--u)) calc(52 * var(--u)) rgba(0, 0, 0, 0.55);
+      }
+
+      .sys-stack {
+        font-size: calc(13.5 * var(--u));
+        color: #9aa5b8;
+        letter-spacing: 0.01em;
+      }
+
+      .sys-headline {
+        font-size: calc(24 * var(--u));
+        font-weight: 500;
+        line-height: 1.2;
+        color: #ffffff;
+        text-wrap: balance;
+      }
+
+      .sys-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(16 * var(--u));
+        padding-top: calc(12 * var(--u));
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .sys-outcome {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(13 * var(--u));
+        font-variant-numeric: tabular-nums;
+        color: #d6deec;
+      }
+
+      .sys-cta {
+        height: calc(42 * var(--u));
+        padding: 0 calc(20 * var(--u));
+        border-radius: calc(10 * var(--u));
+        background: #ffffff;
+        color: #111418;
+        font-size: calc(14.5 * var(--u));
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+
+      .sys-cta:hover {
+        transform: translateY(-1px);
+        background: #e6ecf5;
+      }
+
+      /* ── Section 5: Curved 3D Cinema Reel ───────────────────────────────────── */
+      .work-section {
+        position: relative;
+        overflow: hidden;
+        padding: calc(116 * var(--u)) 0 calc(100 * var(--u));
+      }
+
+      .work-header {
+        padding: 0 calc(90 * var(--u)) calc(42 * var(--u));
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: calc(32 * var(--u));
+      }
+
+      .work-title {
+        font-weight: 500;
+        font-size: calc(56 * var(--u));
+        line-height: 1.04;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        text-wrap: balance;
+      }
+
+      .work-sub {
+        margin-top: calc(10 * var(--u));
+        font-size: calc(19 * var(--u));
+        color: rgba(17, 20, 24, 0.62);
+      }
+
+      .work-progress-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: calc(8 * var(--u));
+        flex-shrink: 0;
+      }
+
+      .work-progress-label {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(12.5 * var(--u));
+        font-variant-numeric: tabular-nums;
+        color: rgba(17, 20, 24, 0.56);
+      }
+
+      .work-progress-bar {
+        width: calc(180 * var(--u));
+        height: 2px;
+        background: rgba(17, 20, 24, 0.12);
+        overflow: hidden;
+      }
+
+      .work-progress-fill {
+        width: 100%;
+        height: 100%;
+        background: #111418;
+        transform-origin: left center;
+        transform: scaleX(0.25);
+      }
+
+      .work-viewport {
+        width: 100%;
+        overflow: hidden;
+        perspective: 1400px;
+      }
+
+      .work-track {
+        display: flex;
+        gap: calc(36 * var(--u));
+        padding: calc(12 * var(--u)) calc(90 * var(--u));
+        width: max-content;
+        will-change: transform;
+        transform-style: preserve-3d;
+      }
+
+      .work-card {
+        position: relative;
+        width: calc(640 * var(--u));
+        height: calc(470 * var(--u));
+        flex-shrink: 0;
+        background: #0f131a;
+        border-radius: calc(34 * var(--u));
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-shadow: 0 calc(28 * var(--u)) calc(56 * var(--u)) rgba(17, 24, 42, 0.16);
+        will-change: transform;
+      }
+
+      .work-card-media {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #1b2848 0%, #0f131a 100%);
+      }
+
+      .work-card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .work-card:hover .work-card-media img {
+        transform: scale(1.05);
+      }
+
+      .work-card-scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(12, 16, 24, 0.45) 0%,
+          rgba(12, 16, 24, 0.25) 38%,
+          rgba(12, 16, 24, 0.94) 84%,
+          rgba(12, 16, 24, 0.98) 100%
+        );
+        pointer-events: none;
+      }
+
+      .work-card-index {
+        position: absolute;
+        top: calc(26 * var(--u));
+        left: calc(32 * var(--u));
+        z-index: 2;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(14 * var(--u));
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .work-card-body {
+        position: relative;
+        z-index: 2;
+        padding: calc(32 * var(--u)) calc(34 * var(--u));
+        display: flex;
+        flex-direction: column;
+        gap: calc(10 * var(--u));
+      }
+
+      .work-meta {
+        font-size: calc(13.5 * var(--u));
+        color: rgba(255, 255, 255, 0.72);
+        font-weight: 500;
+      }
+
+      .work-card-title {
+        font-size: calc(32 * var(--u));
+        font-weight: 500;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        text-wrap: balance;
+      }
+
+      .work-card-desc {
+        font-size: calc(15.5 * var(--u));
+        line-height: 1.46;
+        color: rgba(226, 232, 240, 0.82);
+        max-width: 52ch;
+      }
+
+      .work-card-foot {
+        margin-top: calc(8 * var(--u));
+        padding-top: calc(16 * var(--u));
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(16 * var(--u));
+      }
+
+      .work-metric {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(13.5 * var(--u));
+        font-variant-numeric: tabular-nums;
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      .work-inspect-btn {
+        font-size: calc(14.5 * var(--u));
+        font-weight: 500;
+        color: #ffffff;
+        padding: calc(8 * var(--u)) calc(18 * var(--u));
+        border-radius: calc(9 * var(--u));
+        background: rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(8px);
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+
+      .work-inspect-btn:hover {
+        background: #ffffff;
+        color: #111418;
+      }
+
+      /* ── Section 6: Scroll-Scrubbed Iris Chamber & Kinetic Tunnel ────────────── */
+      .studio-outer {
+        position: relative;
+        padding: calc(20 * var(--u)) 0;
+      }
+
+      .studio-section {
+        position: relative;
+        background: radial-gradient(circle at 50% 30%, #162447 0%, #0b0e15 72%);
+        color: #f4f7fb;
+        padding: calc(144 * var(--u)) calc(90 * var(--u)) calc(124 * var(--u));
+        overflow: hidden;
+        will-change: clip-path;
+        scroll-margin-top: calc(96 * var(--u));
+      }
+
+      .studio-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: none;
+        opacity: 0.92;
+      }
+
+      .studio-inner {
+        position: relative;
+        z-index: 2;
+        max-width: calc(1356 * var(--u));
+        margin: 0 auto;
+      }
+
+      .studio-manifesto {
+        display: flex;
+        flex-direction: column;
+        gap: calc(6 * var(--u));
+      }
+
+      .manifesto-line {
+        font-weight: 500;
+        font-size: calc(84 * var(--u));
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+        will-change: transform, opacity;
+      }
+
+      .manifesto-line-right {
+        text-align: right;
+        color: rgba(226, 234, 248, 0.72);
+      }
+
+      .pillars-grid {
+        margin-top: calc(74 * var(--u));
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(28 * var(--u));
+      }
+
+      .pillar-item {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: calc(24 * var(--u));
+        padding: calc(30 * var(--u));
+        display: flex;
+        flex-direction: column;
+        gap: calc(12 * var(--u));
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+
+      .pillar-item:hover {
+        transform: translateY(calc(-4 * var(--u)));
+        border-color: rgba(255, 255, 255, 0.24);
+      }
+
+      .pillar-num {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(13.5 * var(--u));
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: #ff6a2b;
+      }
+
+      .pillar-title {
+        font-size: calc(24 * var(--u));
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        color: #ffffff;
+      }
+
+      .pillar-body {
+        font-size: calc(16 * var(--u));
+        line-height: 1.5;
+        color: #b4c0d4;
+      }
+
+      .benchmarks-row {
+        margin-top: calc(64 * var(--u));
+        padding-top: calc(36 * var(--u));
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(44 * var(--u));
+      }
+
+      .benchmark-val {
+        font-size: calc(56 * var(--u));
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+        color: #ffffff;
+        line-height: 1.05;
+      }
+
+      .benchmark-label {
+        margin-top: calc(8 * var(--u));
+        font-size: calc(15.5 * var(--u));
+        color: #9aa5b8;
+      }
+
+      /* ── Section 7: Scope Blueprint Studio & Quiet Obsidian Footer ──────────── */
+      .closing-section {
+        background: linear-gradient(180deg, #f4f7fb 0%, #e7edf6 100%);
+        color: var(--ink);
+        padding: calc(116 * var(--u)) calc(90 * var(--u)) 0;
+        position: relative;
+      }
+
+      .closing-grid {
+        max-width: calc(1356 * var(--u));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: calc(64 * var(--u));
+        align-items: center;
+      }
+
+      .closing-heading {
+        font-weight: 500;
+        font-size: calc(74 * var(--u));
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        text-wrap: balance;
+      }
+
+      .closing-copy {
+        margin-top: calc(20 * var(--u));
+        font-size: calc(20 * var(--u));
+        line-height: 1.45;
+        color: rgba(17, 20, 24, 0.68);
+        max-width: 38ch;
+      }
+
+      .closing-cta {
+        margin-top: calc(32 * var(--u));
+        height: calc(50 * var(--u));
+        padding: 0 calc(28 * var(--u));
+        border-radius: calc(13 * var(--u));
+        background: #16191f;
+        color: #ffffff;
+        font-size: calc(16 * var(--u));
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.2s ease;
+      }
+
+      .closing-cta:hover {
+        transform: scale(1.04);
+        background: #2b3140;
+      }
+
+      .estimator-card {
+        background: #ffffff;
+        border: 1px solid rgba(17, 20, 24, 0.09);
+        border-radius: calc(32 * var(--u));
+        padding: calc(36 * var(--u));
+        box-shadow: 0 calc(28 * var(--u)) calc(60 * var(--u)) rgba(20, 32, 60, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: calc(24 * var(--u));
+      }
+
+      .est-group-label {
+        font-size: calc(13.5 * var(--u));
+        font-weight: 600;
+        color: rgba(17, 20, 24, 0.62);
+        margin-bottom: calc(10 * var(--u));
+      }
+
+      .est-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: calc(10 * var(--u));
+      }
+
+      .est-horizon-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(10 * var(--u));
+      }
+
+      .est-btn {
+        min-height: calc(44 * var(--u));
+        padding: calc(10 * var(--u)) calc(14 * var(--u));
+        border-radius: calc(11 * var(--u));
+        border: 1px solid rgba(17, 20, 24, 0.12);
+        background: #f6f8fc;
+        color: #364152;
+        font-size: calc(14.5 * var(--u));
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      }
+
+      .est-btn:hover {
+        border-color: rgba(17, 20, 24, 0.35);
+        color: #111418;
+      }
+
+      .est-btn.is-selected {
+        background: #16191f;
+        color: #ffffff;
+        border-color: #16191f;
+      }
+
+      .squad-blueprint {
+        padding-top: calc(18 * var(--u));
+        border-top: 1px solid rgba(17, 20, 24, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: calc(12 * var(--u));
+      }
+
+      .squad-nodes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: calc(6 * var(--u)) calc(20 * var(--u));
+      }
+
+      .squad-node {
+        padding: calc(8 * var(--u)) 0;
+        border-bottom: 1px solid rgba(17, 20, 24, 0.08);
+        color: #111418;
+        font-size: calc(13.5 * var(--u));
+        font-weight: 500;
+        display: flex;
+        align-items: baseline;
+        gap: calc(10 * var(--u));
+      }
+
+      .squad-node-role {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: calc(11.5 * var(--u));
+        color: #ff5512;
+        font-weight: 600;
+        min-width: 4.5ch;
+      }
+
+      .est-output {
+        padding-top: calc(18 * var(--u));
+        border-top: 1px solid rgba(17, 20, 24, 0.08);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(16 * var(--u));
+      }
+
+      .est-metric-k {
+        font-size: calc(13 * var(--u));
+        color: rgba(17, 20, 24, 0.56);
+      }
+
+      .est-metric-v {
+        margin-top: calc(4 * var(--u));
+        font-size: calc(18 * var(--u));
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: var(--ink);
+      }
+
+      .site-footer {
+        margin: calc(96 * var(--u)) calc(-90 * var(--u)) 0;
+        padding: calc(34 * var(--u)) calc(90 * var(--u));
+        background: #12151b;
+        color: #8d97a8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(24 * var(--u));
+        flex-wrap: wrap;
+        font-size: calc(14.5 * var(--u));
+      }
+
+      .footer-nav {
+        display: flex;
+        align-items: center;
+        gap: calc(24 * var(--u));
+      }
+
+      .footer-nav a:hover,
+      .footer-email:hover {
+        color: #ffffff;
+      }
+
+      .footer-brand {
+        color: #ffffff;
+      }
+
+      .dialog-case-meta {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 12px;
+      }
+
+      .dialog-case-block {
+        font-size: 14.5px;
+        line-height: 1.5;
+        color: #374151;
+        margin-bottom: 12px;
+      }
+
+      .dialog-case-outcome {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        font-weight: 600;
+        color: #111418;
+        background: #eef2f8;
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+      }
+
+      /* ── Project Inquiry Dialog ─────────────────────────────────────────────── */
+      dialog.nv-dialog {
+        margin: auto;
+        border: none;
+        border-radius: 20px;
+        padding: 28px;
+        max-width: 440px;
+        width: calc(100vw - 32px);
+        background: #ffffff;
+        color: var(--ink);
+        box-shadow: 0 28px 60px rgba(17, 20, 24, 0.22);
+      }
+
+      dialog.nv-dialog::backdrop {
+        background: rgba(17, 20, 24, 0.35);
+        backdrop-filter: blur(4px);
+      }
+
+      .dialog-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .dialog-title {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .dialog-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        background: #eef2f8;
+        font-size: 16px;
+      }
+
+      .dialog-body {
+        font-size: 15px;
+        line-height: 1.5;
+        color: #4b5563;
+        margin-bottom: 18px;
+      }
+
+      .dialog-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .dialog-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .dialog-input {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 10px;
+        border: 1px solid #d5dce6;
+        font: inherit;
+        font-size: 15px;
+        color: var(--ink);
+        background: #ffffff;
+      }
+
+      .dialog-submit {
+        height: 44px;
+        border-radius: 11px;
+        background: #16191f;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 500;
+        margin-top: 4px;
+      }
+
+      .dialog-submit:hover {
+        background: #2b3140;
+      }
+
+      .dialog-msg {
+        font-size: 14px;
+        line-height: 1.45;
+        color: #111418;
+        background: #eef2f8;
+        padding: 12px 14px;
+        border-radius: 10px;
+      }
+
+      /* ── Phone Layout (<= 820px) ────────────────────────────────────────────── */
+      @media (max-width: 820px) {
+        :root {
+          --u: calc(100vw / 390);
+        }
+
+        section[id] {
+          scroll-margin-top: 68px;
+        }
+
+        .loader-line {
+          font-size: 22px;
+        }
+
+        .site-header {
+          top: 12px;
+          left: 12px;
+          right: 12px;
+        }
+
+        .header-pill {
+          height: 46px;
+          border-radius: 12px;
+        }
+
+        .pill-left,
+        .site-header.is-compact .pill-left {
+          width: 148px;
+          padding: 0 12px;
+        }
+
+        .brand-logo {
+          font-size: 20px;
+        }
+
+        .brand-dot {
+          width: 3px;
+          height: 3px;
+          margin-left: 2px;
+        }
+
+        .header-nav {
+          display: none;
+        }
+
+        .more-btn {
+          width: 22px;
+          height: 22px;
+        }
+
+        .more-btn svg {
+          width: 3px;
+          height: 12px;
+        }
+
+        .pill-right {
+          height: 46px;
+          margin-top: 0;
+          gap: 10px;
+          font-size: 13.5px;
+          padding: 0 6px 0 12px;
+        }
+
+        .try-chip {
+          border-radius: 8px;
+          padding: 7px 11px;
+        }
+
+        .more-menu {
+          top: 66px;
+          left: 12px;
+          min-width: 180px;
+          padding: 8px;
+          border-radius: 12px;
+        }
+
+        .more-menu a {
+          padding: 8px 12px;
+          font-size: 14px;
+        }
+
+        .hero {
+          --u: calc(100vw / 390);
+          height: 100svh;
+          min-height: 520px;
+        }
+
+        .hero-content {
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-end;
+          gap: 0;
+          padding: 0 20px 30svh;
+        }
+
+        .hero-headline {
+          font-size: 15.2vw;
+          line-height: 0.96;
+        }
+
+        .hero-right {
+          padding-bottom: 0;
+        }
+
+        .hero-subtitle {
+          margin-top: 16px;
+          font-size: 16px;
+        }
+
+        .hero-cta {
+          margin-top: 22px;
+          height: 44px;
+          font-size: 15px;
+          padding: 0 24px;
+          border-radius: 12px;
+        }
+
+        .ticker-section {
+          padding: 44px 0 16px;
+        }
+
+        .ticker-caption {
+          font-size: 14px;
+          padding: 0 24px;
+        }
+
+        .marquee {
+          margin-top: 28px;
+        }
+
+        .logo-list {
+          gap: 48px;
+          padding-right: 48px;
+          font-size: 22px;
+        }
+
+        .logo-item {
+          height: 32px;
+        }
+
+        .wm-syntra,
+        .wm-orbital,
+        .wm-velox {
+          font-size: 19px;
+        }
+
+        .tl-wrap {
+          padding: 72px 12px 20px;
+        }
+
+        .tl-box {
+          aspect-ratio: 1372 / 640;
+        }
+
+        .tl-panel {
+          border-radius: 16px;
+        }
+
+        .tl-pause {
+          left: 1.4%;
+          top: 3.4%;
+          width: 15px;
+          height: 15px;
+          border-radius: 4.5px;
+        }
+
+        .tl-pause svg {
+          width: 4.5px;
+          height: 5.5px;
+        }
+
+        .tl-ruler {
+          top: 3.6%;
+          height: 12px;
+        }
+
+        .ruler-label {
+          font-size: 6.5px;
+        }
+
+        .ruler-tick {
+          top: 1px;
+          height: 4px;
+        }
+
+        .ruler-tick.is-alt {
+          display: none;
+        }
+
+        .tl-lane {
+          border-radius: 7px;
+          padding: 0 7px;
+        }
+
+        .tl-code {
+          font-size: 5.5px;
+          gap: 2px;
+        }
+
+        .tl-code-row {
+          gap: 5px;
+        }
+
+        .tl-track-label {
+          left: 1.3%;
+          font-size: 6px;
+          letter-spacing: -0.03em;
+        }
+
+        .playhead {
+          top: 16%;
+        }
+
+        .playhead-pill {
+          font-size: 6px;
+          padding: 2px 3.5px;
+          border-radius: 3.5px;
+        }
+
+        .statement-wrap {
+          padding: 56px 18px 64px;
+        }
+
+        .statement-heading {
+          font-size: 9.2vw;
+          line-height: 1.12;
+          max-width: none;
+        }
+
+        .stmt-slot {
+          width: 1.15em;
+          height: 1.15em;
+          margin: -0.05em 0.2em -0.2em 0.2em;
+        }
+
+        .portal-section {
+          padding: 20px 12px 64px;
+        }
+
+        .portal-shell {
+          border-radius: 24px;
+          padding: 36px 20px;
+        }
+
+        .portal-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .portal-heading {
+          font-size: 32px;
+        }
+
+        .portal-sub {
+          font-size: 15px;
+        }
+
+        .sys-tab {
+          padding: 14px 4px;
+          grid-template-columns: 32px 1fr auto;
+          gap: 10px;
+        }
+
+        .sys-num {
+          font-size: 12px;
+        }
+
+        .sys-title {
+          font-size: 17px;
+        }
+
+        .sys-brief {
+          font-size: 13px;
+        }
+
+        .sys-stage-perspective {
+          perspective: none;
+          min-height: auto;
+        }
+
+        .sys-stack-3d {
+          height: auto;
+          transform: none !important;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .sys-layer-canvas {
+          display: none;
+        }
+
+        .sys-layer-media {
+          position: relative;
+          inset: auto;
+          height: 210px;
+          border-radius: 18px;
+          transform: none;
+        }
+
+        .sys-layer-glass {
+          position: relative;
+          left: auto;
+          right: auto;
+          bottom: auto;
+          border-radius: 18px;
+          padding: 18px;
+          transform: none;
+          gap: 10px;
+        }
+
+        .sys-stack,
+        .sys-outcome {
+          font-size: 12px;
+        }
+
+        .sys-headline {
+          font-size: 18px;
+        }
+
+        .sys-foot {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .sys-cta {
+          height: 44px;
+          padding: 0 20px;
+          font-size: 14px;
+          border-radius: 10px;
+        }
+
+        .work-section {
+          padding: 48px 0 64px;
+        }
+
+        .work-header {
+          padding: 0 18px 24px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 14px;
+        }
+
+        .work-title {
+          font-size: 32px;
+        }
+
+        .work-sub {
+          font-size: 15px;
+        }
+
+        .work-progress-wrap {
+          display: none;
+        }
+
+        .work-viewport {
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          perspective: none;
+        }
+
+        .work-track {
+          padding: 0 18px 8px;
+          gap: 14px;
+        }
+
+        .work-card {
+          width: 310px;
+          height: 360px;
+          border-radius: 22px;
+          scroll-snap-align: start;
+          transform: none !important;
+        }
+
+        .work-card-index {
+          top: 16px;
+          left: 18px;
+          font-size: 12px;
+        }
+
+        .work-card-body {
+          padding: 18px;
+          gap: 8px;
+        }
+
+        .work-meta {
+          font-size: 12px;
+        }
+
+        .work-card-title {
+          font-size: 20px;
+        }
+
+        .work-card-desc {
+          font-size: 13.5px;
+        }
+
+        .work-metric,
+        .work-inspect-btn {
+          font-size: 12.5px;
+        }
+
+        .studio-section {
+          padding: 56px 18px 72px;
+          clip-path: none !important;
+        }
+
+        .manifesto-line {
+          font-size: 40px;
+        }
+
+        .pillars-grid,
+        .benchmarks-row {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          margin-top: 36px;
+          padding-top: 24px;
+        }
+
+        .pillar-item {
+          padding: 20px;
+          border-radius: 18px;
+        }
+
+        .pillar-num {
+          font-size: 12px;
+        }
+
+        .pillar-title {
+          font-size: 20px;
+        }
+
+        .pillar-body,
+        .benchmark-label {
+          font-size: 14.5px;
+        }
+
+        .benchmark-val {
+          font-size: 38px;
+        }
+
+        .closing-section {
+          padding: 56px 18px 0;
+        }
+
+        .closing-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+
+        .closing-heading {
+          font-size: 40px;
+        }
+
+        .closing-copy {
+          font-size: 16px;
+        }
+
+        .closing-cta {
+          height: 46px;
+          padding: 0 22px;
+          font-size: 15px;
+          border-radius: 12px;
+        }
+
+        .estimator-card {
+          padding: 20px;
+          border-radius: 20px;
+          gap: 18px;
+        }
+
+        .est-group-label {
+          font-size: 12.5px;
+          margin-bottom: 8px;
+        }
+
+        .est-options,
+        .est-horizon-options {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+
+        .est-btn {
+          min-height: 44px;
+          padding: 8px 10px;
+          font-size: 13px;
+          border-radius: 9px;
+        }
+
+        .squad-nodes {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        .squad-node {
+          padding: 7px 0;
+          font-size: 13px;
+        }
+
+        .squad-node-role {
+          font-size: 11px;
+        }
+
+        .est-output {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          padding-top: 16px;
+        }
+
+        .est-metric-k {
+          font-size: 12px;
+        }
+
+        .est-metric-v {
+          font-size: 16px;
+        }
+
+        .site-footer {
+          margin: 48px -18px 0;
+          padding: 24px 18px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 14px;
+          font-size: 13px;
+        }
+
+        .footer-nav {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+      }
+
+      /* ── Reduced Motion ─────────────────────────────────────────────────────── */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .loader {
+          display: none !important;
+        }
+        .pill-left,
+        .header-nav,
+        .hero-cta,
+        .tile canvas {
+          transition: none !important;
+        }
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+          "rapier": "https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.14.0/rapier.es.js"
+        }
+      }
+    </script>
+  </head>
+
+  <body id="top" data-hero-ready="false" data-loader-done="false" data-timeline-paused="false" data-flip-mode="tracks">
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <!-- Hidden SVG squircle clip definition -->
+    <svg width="0" height="0" style="position:absolute;pointer-events:none;" aria-hidden="true">
+      <defs>
+        <clipPath id="squircle-clip" clipPathUnits="objectBoundingBox">
+          <path id="squircle-path" d=""></path>
+        </clipPath>
+      </defs>
+    </svg>
+
+    <!-- Loader -->
+    <div class="loader" id="loader" role="status" aria-live="polite" aria-label="Loading Zxtni Studio">
+      <p class="loader-line-wrap">
+        <span class="loader-line" id="loader-line">Shipping bold web &amp; mobile apps.</span>
+      </p>
+    </div>
+
+    <!-- Fixed Header -->
+    <header class="site-header" id="site-header">
+      <div class="header-pill pill-left" id="header-left-pill">
+        <a href="#top" class="brand-logo" aria-label="Zxtni Studio home">Zxtni Studio<span class="brand-dot" aria-hidden="true"></span></a>
+        <nav class="header-nav" aria-label="Primary navigation">
+          <a href="#timeline">Pipeline</a>
+          <a href="#systems">Systems</a>
+          <a href="#work">Work</a>
+          <a href="#studio">Craft</a>
+          <a href="#contact-cta">Estimate</a>
+        </nav>
+        <button
+          type="button"
+          class="more-btn"
+          id="more-btn"
+          aria-label="More navigation options"
+          aria-expanded="false"
+          aria-controls="more-menu"
+        >
+          <svg viewBox="0 0 4 16" fill="currentColor" aria-hidden="true">
+            <circle cx="2" cy="2" r="2"></circle>
+            <circle cx="2" cy="14" r="2"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <div class="header-pill pill-right" id="header-right-pill">
+        <a href="#contact" class="contact-link" id="contact-link">Contact</a>
+        <button type="button" class="try-chip" id="start-project-nav">Start Project</button>
+      </div>
+    </header>
+
+    <div class="more-menu" id="more-menu" hidden role="menu" aria-label="Quick navigation">
+      <a href="#timeline" role="menuitem">Pipeline</a>
+      <a href="#systems" role="menuitem">Systems</a>
+      <a href="#work" role="menuitem">Work</a>
+      <a href="#studio" role="menuitem">Craft</a>
+      <a href="#contact-cta" role="menuitem">Estimate</a>
+    </div>
+
+    <main>
+      <!-- Section 1: Hero -->
+      <section class="hero" id="hero" aria-label="Hero">
+        <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true" data-testid="hero-canvas"></canvas>
+        <div class="hero-content">
+          <h1 class="hero-headline" id="hero-headline">
+            <span class="line-mask"><span class="line-inner">Crafted for</span></span>
+            <span class="line-mask"><span class="line-inner">Digital</span></span>
+          </h1>
+          <div class="hero-right">
+            <p class="hero-subtitle" id="hero-subtitle">Zxtni Studio, the web &amp; app agency <br />built for ambitious teams.</p>
+            <button type="button" class="hero-cta" id="hero-cta">Start a Project</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Client Logo Ticker -->
+      <section class="ticker-section" id="ticker" aria-label="Trusted teams">
+        <p class="ticker-caption">Founders and product teams build with Zxtni Studio</p>
+        <div class="marquee" id="marquee">
+          <div class="marquee-track" id="marquee-track">
+            <ul class="logo-list" id="logo-list-primary">
+              <li class="logo-item wm-veltrix">Veltrix</li>
+              <li class="logo-item wm-kinetiq">KINETIQ</li>
+              <li class="logo-item wm-syntra">SYNTRA</li>
+              <li class="logo-item wm-orbital">ORBITAL</li>
+              <li class="logo-item wm-velox">VELOX</li>
+              <li class="logo-item wm-finstack">FinStack</li>
+              <li class="logo-item wm-modulo">MODULO</li>
+              <li class="logo-item wm-looma">Looma</li>
+            </ul>
+            <ul class="logo-list" aria-hidden="true">
+              <li class="logo-item wm-veltrix">Veltrix</li>
+              <li class="logo-item wm-kinetiq">KINETIQ</li>
+              <li class="logo-item wm-syntra">SYNTRA</li>
+              <li class="logo-item wm-orbital">ORBITAL</li>
+              <li class="logo-item wm-velox">VELOX</li>
+              <li class="logo-item wm-finstack">FinStack</li>
+              <li class="logo-item wm-modulo">MODULO</li>
+              <li class="logo-item wm-looma">Looma</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Delivery Sprint Timeline -> Statement -->
+      <section class="editor-section" id="editor-section" aria-label="Web and app engineering showcase">
+        <div class="tl-wrap" id="timeline">
+          <div class="tl-box" id="tl-box">
+            <div class="tl-panel"></div>
+
+            <button
+              type="button"
+              class="tl-pause"
+              id="tl-pause"
+              aria-label="Pause code runner"
+              aria-pressed="false"
+              data-testid="timeline-pause-btn"
+            >
+              <svg id="tl-pause-icon" viewBox="0 0 11 12" fill="#ffffff" aria-hidden="true">
+                <rect x="1" y="0.5" width="3" height="11" rx="0.8"></rect>
+                <rect x="7" y="0.5" width="3" height="11" rx="0.8"></rect>
+              </svg>
+            </button>
+
+            <div class="tl-ruler" id="tl-ruler" aria-hidden="true"></div>
+
+            <div class="tl-lane tl-lane-v1" aria-hidden="true">
+              <div class="tl-code">
+                <div class="tl-code-row"><span class="tl-ln">01</span><span><span class="tok-kw">import</span> { <span class="tok-fn">createNativeApp</span>, <span class="tok-ty">ScreenTransition</span> } <span class="tok-kw">from</span> <span class="tok-str">'@Zxtni Studio/mobile'</span>; &nbsp;// 60fps gestures &amp; biometric auth</span></div>
+                <div class="tl-code-row"><span class="tl-ln">02</span><span><span class="tok-kw">export const</span> <span class="tok-fn">Zxtni StudioApp</span> = (): <span class="tok-ty">JSX.Element</span> =&gt; <span class="tok-fn">createNativeApp</span>({ theme: <span class="tok-str">'adaptive'</span>, offlineSync: <span class="tok-kw">true</span> });</span></div>
+                <div class="tl-code-row"><span class="tl-ln">03</span><span><span class="tok-kw">const</span> inference = <span class="tok-kw">await</span> <span class="tok-fn">streamTokens</span>({ model: <span class="tok-str">'nv-neural-v4'</span>, latencyBudgetMs: 42, stream: <span class="tok-kw">true</span> });</span></div>
+                <div class="tl-code-row"><span class="tl-ln">04</span><span><span class="tok-kw">return</span> &lt;<span class="tok-ty">ScreenTransition</span> <span class="tok-fn">hydration</span>=<span class="tok-str">"zero-flicker"</span> <span class="tok-fn">target</span>=<span class="tok-str">"ios-android-web"</span> <span class="tok-fn">payload</span>={inference} /&gt;;</span></div>
+              </div>
+            </div>
+            <div class="tl-lane tl-lane-v2" aria-hidden="true">
+              <div class="tl-code">
+                <div class="tl-code-row"><span class="tl-ln">05</span><span><span class="tok-kw">import</span> { <span class="tok-fn">createEdgeRouter</span>, <span class="tok-ty">EdgeCache</span> } <span class="tok-kw">from</span> <span class="tok-str">'@Zxtni Studio/core'</span>; &nbsp;// multi-region runtime</span></div>
+                <div class="tl-code-row"><span class="tl-ln">06</span><span><span class="tok-kw">export async function</span> <span class="tok-fn">deployBuild</span>(commit: <span class="tok-ty">ReleaseSpec</span>): <span class="tok-ty">Promise&lt;Deployment&gt;</span> {</span></div>
+                <div class="tl-code-row"><span class="tl-ln">07</span><span>&nbsp;&nbsp;<span class="tok-kw">const</span> tokens = <span class="tok-fn">compileDesignSystem</span>({ grid: <span class="tok-str">'12-col'</span>, contrast: <span class="tok-str">'AAA'</span>, bundleKb: 38 });</span></div>
+                <div class="tl-code-row"><span class="tl-ln">08</span><span>&nbsp;&nbsp;<span class="tok-kw">return await</span> <span class="tok-fn">createEdgeRouter</span>(tokens).<span class="tok-fn">ship</span>({ regions: [<span class="tok-str">'iad'</span>, <span class="tok-str">'fra'</span>, <span class="tok-str">'sin'</span>], zeroDowntime: <span class="tok-kw">true</span> });</span></div>
+              </div>
+            </div>
+            <span class="tl-track-label tl-track-label-v1">UI.tsx</span>
+            <span class="tl-track-label tl-track-label-v2">API.ts</span>
+
+            <!-- Five deliverable squircle tiles -->
+            <div class="clip-slot clip-slot-0" data-track-slot="0">
+              <div class="clip-block" data-clip-block="0">
+                <div class="clip-inner" data-clip-inner="0">
+                  <div class="tile tile-0" title="Mobile Apps"><canvas data-tile-canvas="0"></canvas></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clip-slot clip-slot-1" data-track-slot="1">
+              <div class="clip-block" data-clip-block="1">
+                <div class="clip-inner" data-clip-inner="1">
+                  <div class="tile tile-1" title="Web Platforms"><canvas data-tile-canvas="1"></canvas></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clip-slot clip-slot-2" data-track-slot="2">
+              <div class="clip-block" data-clip-block="2">
+                <div class="clip-inner" data-clip-inner="2">
+                  <div class="tile tile-2" title="AI &amp; Neural Systems"><canvas data-tile-canvas="2"></canvas></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clip-slot clip-slot-3" data-track-slot="3">
+              <div class="clip-block" data-clip-block="3">
+                <div class="clip-inner" data-clip-inner="3">
+                  <div class="tile tile-3" title="Design Systems"><canvas data-tile-canvas="3"></canvas></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clip-slot clip-slot-4" data-track-slot="4">
+              <div class="clip-block" data-clip-block="4">
+                <div class="clip-inner" data-clip-inner="4">
+                  <div class="tile tile-4" title="Cloud Launches"><canvas data-tile-canvas="4"></canvas></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="playhead" id="playhead" aria-hidden="true">
+              <div class="playhead-pill" id="playhead-pill">LN 049</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="statement-wrap" id="statement">
+          <h2 class="statement-heading" id="statement-heading">
+            Zxtni Studio <span class="stmt-slot" data-stmt-slot="0" aria-hidden="true"></span> builds fast web <span class="stmt-slot" data-stmt-slot="1" aria-hidden="true"></span> apps and scalable <span class="stmt-slot" data-stmt-slot="2" aria-hidden="true"></span> mobile products <span class="stmt-slot" data-stmt-slot="3" aria-hidden="true"></span> crafted to ship bold <span class="stmt-slot" data-stmt-slot="4" aria-hidden="true"></span> digital ideas.
+          </h2>
+        </div>
+      </section>
+
+      <!-- Section 4: Systems Horizon Portal -->
+      <section class="portal-section" id="systems" aria-label="Engineering systems">
+        <div class="portal-shell" id="portal-shell">
+          <div class="portal-grid">
+            <div class="portal-left">
+              <div>
+                <p class="portal-kicker">Core Architecture</p>
+                <h2 class="portal-heading">Systems engineered to hold at scale.</h2>
+                <p class="portal-sub">Four focused practices combining product design, resilient APIs, and zero-flicker frontend craft.</p>
+              </div>
+
+              <div class="sys-list" role="tablist" aria-label="Engineering disciplines">
+                <button type="button" class="sys-tab is-active" role="tab" aria-selected="true" data-sys-tab="0">
+                  <span class="sys-num">01</span>
+                  <span class="sys-meta">
+                    <span class="sys-title">Web Platforms</span>
+                    <span class="sys-brief">Sub-50ms edge routing &amp; Next.js applications</span>
+                  </span>
+                  <span class="sys-arrow" aria-hidden="true">&rarr;</span>
+                </button>
+                <button type="button" class="sys-tab" role="tab" aria-selected="false" data-sys-tab="1">
+                  <span class="sys-num">02</span>
+                  <span class="sys-meta">
+                    <span class="sys-title">Native Mobile</span>
+                    <span class="sys-brief">60fps Swift, Kotlin &amp; React Native experiences</span>
+                  </span>
+                  <span class="sys-arrow" aria-hidden="true">&rarr;</span>
+                </button>
+                <button type="button" class="sys-tab" role="tab" aria-selected="false" data-sys-tab="2">
+                  <span class="sys-num">03</span>
+                  <span class="sys-meta">
+                    <span class="sys-title">AI &amp; Neural Systems</span>
+                    <span class="sys-brief">Streaming copilots &amp; low-latency semantic search</span>
+                  </span>
+                  <span class="sys-arrow" aria-hidden="true">&rarr;</span>
+                </button>
+                <button type="button" class="sys-tab" role="tab" aria-selected="false" data-sys-tab="3">
+                  <span class="sys-num">04</span>
+                  <span class="sys-meta">
+                    <span class="sys-title">Design Systems</span>
+                    <span class="sys-brief">Tokenized Figma-to-code component libraries</span>
+                  </span>
+                  <span class="sys-arrow" aria-hidden="true">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="sys-stage-perspective" id="sys-stage" role="tabpanel">
+              <div class="sys-stack-3d" id="sys-stack-3d">
+                <div class="sys-layer-canvas" aria-hidden="true">
+                  <canvas id="systems-canvas"></canvas>
+                </div>
+                <div class="sys-layer-media">
+                  <img
+                    id="sys-stage-img"
+                    src="/src/assets/images/neurovita_web_platform_1794730508337.jpg"
+                    alt="Zxtni Studio Web Platforms architecture visual"
+                    referrerpolicy="no-referrer"
+                  />
+                  <div class="sys-media-scrim" aria-hidden="true"></div>
+                </div>
+                <div class="sys-layer-glass">
+                  <div class="sys-stack" id="sys-stage-stack">React &middot; TypeScript &middot; Edge Runtime</div>
+                  <h3 class="sys-headline" id="sys-stage-headline">Multi-region web products tuned for instant first paint and conversion velocity.</h3>
+                  <div class="sys-foot">
+                    <div class="sys-outcome" id="sys-stage-outcome">42ms median global TTFB across 18 regions</div>
+                    <button type="button" class="sys-cta" id="sys-stage-cta">Scope Web Platform</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Curved 3D Cinema Reel -->
+      <section class="work-section" id="work" aria-label="Selected client launches">
+        <div class="work-header">
+          <div>
+            <h2 class="work-title">Selected launches</h2>
+            <p class="work-sub">Shipped from architecture to App Store and global edge.</p>
+          </div>
+          <div class="work-progress-wrap" aria-hidden="true">
+            <span class="work-progress-label" id="work-progress-label">01 / 04</span>
+            <div class="work-progress-bar">
+              <div class="work-progress-fill" id="work-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-viewport" id="work-viewport">
+          <div class="work-track" id="work-track">
+            <article class="work-card">
+              <div class="work-card-media">
+                <img src="/src/assets/images/neurovita_mobile_app_1794730507906.jpg" alt="Veltrix mobile application showcase" referrerpolicy="no-referrer" />
+                <div class="work-card-scrim" aria-hidden="true"></div>
+              </div>
+              <span class="work-card-index">01</span>
+              <div class="work-card-body">
+                <div class="work-meta">Veltrix &middot; Native Mobile &middot; 8 Weeks</div>
+                <h3 class="work-card-title">Biometric Wealth &amp; Portfolio Engine</h3>
+                <p class="work-card-desc">Rebuilt Veltrix's flagship mobile experience with offline portfolio sync, haptic trade execution, and native Swift/Kotlin modules.</p>
+                <div class="work-card-foot">
+                  <span class="work-metric">1.8M installs &middot; 99.98% crash-free</span>
+                  <button type="button" class="work-inspect-btn" data-case-id="0">Inspect Case</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card-media">
+                <img src="/src/assets/images/neurovita_web_platform_1794730508337.jpg" alt="KINETIQ web platform showcase" referrerpolicy="no-referrer" />
+                <div class="work-card-scrim" aria-hidden="true"></div>
+              </div>
+              <span class="work-card-index">02</span>
+              <div class="work-card-body">
+                <div class="work-meta">KINETIQ &middot; Web Platform &middot; 10 Weeks</div>
+                <h3 class="work-card-title">Real-Time Telemetry &amp; Fleet Suite</h3>
+                <p class="work-card-desc">Engineered a live WebSocket operations console handling 50,000 concurrent telemetry streams with zero UI frame drops.</p>
+                <div class="work-card-foot">
+                  <span class="work-metric">+142% enterprise conversion</span>
+                  <button type="button" class="work-inspect-btn" data-case-id="1">Inspect Case</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card-media">
+                <img src="/src/assets/images/neurovita_ai_neural_1794730508691.jpg" alt="SYNTRA AI neural search interface" referrerpolicy="no-referrer" />
+                <div class="work-card-scrim" aria-hidden="true"></div>
+              </div>
+              <span class="work-card-index">03</span>
+              <div class="work-card-body">
+                <div class="work-meta">SYNTRA &middot; AI Systems &middot; 6 Weeks</div>
+                <h3 class="work-card-title">Multi-Model Workflow Copilot</h3>
+                <p class="work-card-desc">Designed and shipped an enterprise semantic search and streaming assistant layer integrated directly into customer support desks.</p>
+                <div class="work-card-foot">
+                  <span class="work-metric">410ms first token &middot; 64K daily queries</span>
+                  <button type="button" class="work-inspect-btn" data-case-id="2">Inspect Case</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card-media">
+                <img src="/src/assets/images/neurovita_design_system_1794730508948.jpg" alt="FinStack unified design system" referrerpolicy="no-referrer" />
+                <div class="work-card-scrim" aria-hidden="true"></div>
+              </div>
+              <span class="work-card-index">04</span>
+              <div class="work-card-body">
+                <div class="work-meta">FinStack &middot; Design System &middot; 7 Weeks</div>
+                <h3 class="work-card-title">Unified Token &amp; Component Foundation</h3>
+                <p class="work-card-desc">Consolidated 4 fragmented product surfaces into 180 accessible React &amp; React Native primitives backed by automated visual tests.</p>
+                <div class="work-card-foot">
+                  <span class="work-metric">3.4x faster feature launches</span>
+                  <button type="button" class="work-inspect-btn" data-case-id="3">Inspect Case</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Scroll-Scrubbed Iris Chamber & Kinetic Tunnel -->
+      <div class="studio-outer">
+        <section class="studio-section" id="studio" aria-label="Zxtni Studio engineering craft">
+          <canvas class="studio-canvas" id="studio-canvas" aria-hidden="true"></canvas>
+          <div class="studio-inner">
+            <div class="studio-manifesto">
+              <div class="manifesto-line" id="manifesto-line-1">Built to ship fast.</div>
+              <div class="manifesto-line manifesto-line-right" id="manifesto-line-2">Built to last years.</div>
+            </div>
+
+            <div class="pillars-grid" id="pillars-grid">
+              <div class="pillar-item">
+                <span class="pillar-num">01</span>
+                <h3 class="pillar-title">Architecture Before Pixels</h3>
+                <p class="pillar-body">We map data flows, latency budgets, and edge caching strategies upfront so visual polish sits on rock-solid foundations.</p>
+              </div>
+              <div class="pillar-item">
+                <span class="pillar-num">02</span>
+                <h3 class="pillar-title">Daily Staging Builds</h3>
+                <p class="pillar-body">Founders inspect live preview URLs and TestFlight drops every 48 hours—real software in hand instead of slide decks.</p>
+              </div>
+              <div class="pillar-item">
+                <span class="pillar-num">03</span>
+                <h3 class="pillar-title">Zero-Handoff Code</h3>
+                <p class="pillar-body">Clean TypeScript, automated unit suites, and documented design tokens structured for your internal team to own effortlessly.</p>
+              </div>
+            </div>
+
+            <div class="benchmarks-row" id="benchmarks-row">
+              <div>
+                <div class="benchmark-val" id="bm-latency">42ms</div>
+                <div class="benchmark-label">Median global API response latency</div>
+              </div>
+              <div>
+                <div class="benchmark-val" id="bm-crash">99.98%</div>
+                <div class="benchmark-label">Crash-free mobile production sessions</div>
+              </div>
+              <div>
+                <div class="benchmark-val" id="bm-weeks">6 wks</div>
+                <div class="benchmark-label">Average kickoff to first live release</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Section 7: Interactive Scope Blueprint Studio & Quiet Footer -->
+      <section class="closing-section" id="contact-cta" aria-label="Project scope planner">
+        <div class="closing-grid">
+          <div>
+            <h2 class="closing-heading">Ready when you are.</h2>
+            <p class="closing-copy">Select what you are building to assemble your dedicated Zxtni Studio squad blueprint and launch timeline.</p>
+            <button type="button" class="closing-cta" id="closing-cta-btn">Lock Scope &amp; Book Call</button>
+          </div>
+
+          <div class="estimator-card" id="scope-estimator">
+            <div>
+              <div class="est-group-label">Select Disciplines</div>
+              <div class="est-options">
+                <button type="button" class="est-btn is-selected" data-cap="web" aria-pressed="true">Web Platform</button>
+                <button type="button" class="est-btn" data-cap="mobile" aria-pressed="false">Native Mobile</button>
+                <button type="button" class="est-btn" data-cap="ai" aria-pressed="false">AI Systems</button>
+                <button type="button" class="est-btn" data-cap="design" aria-pressed="false">Design System</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="est-group-label">Target Horizon</div>
+              <div class="est-horizon-options">
+                <button type="button" class="est-btn" data-horizon="sprint" aria-pressed="false">Rapid Sprint</button>
+                <button type="button" class="est-btn is-selected" data-horizon="flagship" aria-pressed="true">Flagship</button>
+                <button type="button" class="est-btn" data-horizon="partner" aria-pressed="false">Embedded Pod</button>
+              </div>
+            </div>
+
+            <div class="squad-blueprint">
+              <div class="est-group-label" style="margin-bottom: 0;">Assembled Squad Blueprint</div>
+              <div class="squad-nodes" id="squad-nodes"></div>
+            </div>
+
+            <div class="est-output">
+              <div>
+                <div class="est-metric-k">Recommended Squad</div>
+                <div class="est-metric-v" id="est-squad">3 Senior Engineers &amp; Designers</div>
+              </div>
+              <div>
+                <div class="est-metric-k">Estimated Delivery</div>
+                <div class="est-metric-v" id="est-timeline">10 Weeks Full Launch</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="site-footer">
+          <a href="#top" class="brand-logo footer-brand">Zxtni Studio<span class="brand-dot" aria-hidden="true"></span></a>
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <a href="#timeline">Pipeline</a>
+            <a href="#systems">Systems</a>
+            <a href="#work">Work</a>
+            <a href="#studio">Craft</a>
+          </nav>
+          <a href="#contact" class="footer-email" id="footer-contact-link">hello@Zxtni Studio.studio &middot; &copy; 2026 Zxtni Studio</a>
+        </footer>
+      </section>
+    </main>
+
+    <!-- Project inquiry & case study dialog (closed by default) -->
+    <dialog class="nv-dialog" id="action-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-head">
+        <h3 class="dialog-title" id="dialog-title">Start a project with Zxtni Studio</h3>
+        <button type="button" class="dialog-close" id="dialog-close" aria-label="Close dialog">&times;</button>
+      </div>
+      <p class="dialog-body" id="dialog-body">Tell us what you are shipping and our web &amp; mobile engineering leads will reply within 24 hours.</p>
+      <div id="dialog-case-detail" hidden>
+        <div class="dialog-case-meta" id="dialog-case-meta"></div>
+        <p class="dialog-case-block" id="dialog-case-block"></p>
+        <div class="dialog-case-outcome" id="dialog-case-outcome"></div>
+        <button type="button" class="dialog-submit" id="dialog-case-cta" style="width:100%;">Build Similar Product</button>
+      </div>
+      <form class="dialog-form" id="dialog-form">
+        <div>
+          <label class="dialog-label" for="dialog-scope">Project Scope</label>
+          <select class="dialog-input" id="dialog-scope">
+            <option value="Web Platform &amp; SaaS">Web Platform &amp; SaaS</option>
+            <option value="iOS &amp; Android Mobile App">iOS &amp; Android Mobile App</option>
+            <option value="AI &amp; Neural Systems">AI &amp; Neural Systems</option>
+            <option value="Full-Stack Product &amp; Design System">Full-Stack Product &amp; Design System</option>
+          </select>
+        </div>
+        <div>
+          <label class="dialog-label" for="dialog-email">Work Email</label>
+          <input type="email" class="dialog-input" id="dialog-email" placeholder="founder@company.com" required />
+        </div>
+        <button type="submit" class="dialog-submit" id="dialog-submit">Request Discovery Call</button>
+      </form>
+    </dialog>
+
+    <script type="module">
+      import * as THREE from 'three';
+      import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+      import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+      import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+      import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+      import RAPIER from 'rapier';
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isSoftwareGl = (() => {
+        try {
+          const probe = document.createElement('canvas');
+          const gl = probe.getContext('webgl2');
+          if (!gl) return true;
+          const ext = gl.getExtension('WEBGL_debug_renderer_info');
+          const param = ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER;
+          const gpu = String(gl.getParameter(param) || '');
+          gl.getExtension('WEBGL_lose_context')?.loseContext();
+          return /SwiftShader|llvmpipe|softpipe|Software|Basic Render/i.test(gpu);
+        } catch {
+          return false;
+        }
+      })();
+
+      // ── 1. Squircle SVG Path (exponent 4.2, 160 samples) ─────────────────────
+      (function buildSquircle() {
+        const samples = 160;
+        const p = 2 / 4.2;
+        let d = '';
+        for (let i = 0; i < samples; i++) {
+          const theta = (i / samples) * Math.PI * 2;
+          const c = Math.cos(theta);
+          const s = Math.sin(theta);
+          const x = 0.5 + 0.5 * Math.sign(c) * Math.pow(Math.abs(c), p);
+          const y = 0.5 + 0.5 * Math.sign(s) * Math.pow(Math.abs(s), p);
+          d += `${i === 0 ? 'M' : 'L'}${x.toFixed(5)} ${y.toFixed(5)} `;
+        }
+        d += 'Z';
+        document.getElementById('squircle-path').setAttribute('d', d);
+      })();
+
+      // ── 2. Code Pipeline Ruler Ticks & Stage Labels ─────────────────────────
+      const PIPELINE_STAGES = ['init', 'types', 'build', 'test', 'lint', 'edge', 'ship'];
+      const rulerLabels = [];
+      (function buildRuler() {
+        const ruler = document.getElementById('tl-ruler');
+        for (let w = 0; w < PIPELINE_STAGES.length; w++) {
+          const label = document.createElement('span');
+          label.className = 'ruler-label';
+          label.style.left = `${(w / 6) * 100}%`;
+          label.textContent = PIPELINE_STAGES[w];
+          ruler.appendChild(label);
+          rulerLabels.push(label);
+
+          if (w < 6) {
+            for (let k = 1; k <= 2; k++) {
+              const tick = document.createElement('span');
+              tick.className = k === 2 ? 'ruler-tick is-alt' : 'ruler-tick';
+              tick.style.left = `${((w + k / 3) / 6) * 100}%`;
+              ruler.appendChild(tick);
+            }
+          }
+        }
+      })();
+
+      // ── 3. Header Compact State & Interactive Project Dialog ─────────────────
+      const header = document.getElementById('site-header');
+      const moreBtn = document.getElementById('more-btn');
+      const moreMenu = document.getElementById('more-menu');
+      const dialog = document.getElementById('action-dialog');
+      const dialogTitle = document.getElementById('dialog-title');
+      const dialogBody = document.getElementById('dialog-body');
+      const dialogForm = document.getElementById('dialog-form');
+      const dialogSubmit = document.getElementById('dialog-submit');
+
+      function updateHeaderCompact() {
+        header.classList.toggle('is-compact', window.scrollY > 40);
+      }
+      window.addEventListener('scroll', updateHeaderCompact, { passive: true });
+      updateHeaderCompact();
+
+      moreBtn.addEventListener('click', () => {
+        const open = moreMenu.hidden;
+        moreMenu.hidden = !open;
+        moreBtn.setAttribute('aria-expanded', String(open));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!moreMenu.hidden && !moreMenu.contains(e.target) && !moreBtn.contains(e.target)) {
+          moreMenu.hidden = true;
+          moreBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      moreMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          moreMenu.hidden = true;
+          moreBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      function openActionDialog(mode) {
+        if (mode === 'contact') {
+          dialogTitle.textContent = 'Contact Zxtni Studio';
+          dialogBody.textContent = 'Share your product goals and timeline. Our engineering partners respond within one business day.';
+          dialogSubmit.textContent = 'Send Inquiry';
+        } else {
+          dialogTitle.textContent = 'Start a project with Zxtni Studio';
+          dialogBody.textContent = 'Tell us what you are shipping and our web & mobile engineering leads will reply within 24 hours.';
+          dialogSubmit.textContent = 'Request Discovery Call';
+        }
+        const existingMsg = dialog.querySelector('.dialog-msg');
+        if (existingMsg) existingMsg.remove();
+        dialogForm.hidden = false;
+        dialog.showModal();
+      }
+
+      document.getElementById('contact-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        openActionDialog('contact');
+      });
+      document.getElementById('start-project-nav').addEventListener('click', () => openActionDialog('project'));
+      document.getElementById('hero-cta').addEventListener('click', () => openActionDialog('project'));
+      document.getElementById('dialog-close').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+      dialogForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('dialog-email').value.trim();
+        const scope = document.getElementById('dialog-scope').value;
+        if (!email) return;
+        dialogForm.hidden = true;
+        const msg = document.createElement('p');
+        msg.className = 'dialog-msg';
+        msg.textContent = `Brief logged for ${scope}. Our team will reach out to ${email} shortly.`;
+        dialog.appendChild(msg);
+      });
+
+      // ── 4. Client Logo Ticker + Global Scroll Velocity ───────────────────────
+      const marqueeEl = document.getElementById('marquee');
+      const marqueeTrack = document.getElementById('marquee-track');
+      const primaryLogoList = document.getElementById('logo-list-primary');
+
+      let tickerVisible = true;
+      let tickerX = 0;
+      let tickerBoost = 0;
+      let tickerSkew = 0;
+      let globalScrollVelocity = 0;
+      let lastScrollY = window.scrollY;
+      let lastScrollVelTs = performance.now();
+      let tickerLastTs = performance.now();
+
+      if (!reducedMotion) {
+        window.addEventListener(
+          'scroll',
+          () => {
+            const now = performance.now();
+            const cur = window.scrollY;
+            const dy = cur - lastScrollY;
+            const dtSec = Math.max(0.008, (now - lastScrollVelTs) / 1000);
+            lastScrollY = cur;
+            lastScrollVelTs = now;
+            tickerBoost += Math.abs(dy) * 2.4;
+            const instVel = Math.max(-4500, Math.min(4500, dy / dtSec));
+            globalScrollVelocity = globalScrollVelocity * 0.45 + instVel * 0.55;
+            tickerSkew = Math.max(-5, Math.min(5, -instVel * 0.0022));
+          },
+          { passive: true }
+        );
+
+        const tickerObserver = new IntersectionObserver(
+          (entries) => {
+            tickerVisible = entries[0].isIntersecting;
+            if (tickerVisible) tickerLastTs = performance.now();
+          },
+          { threshold: 0 }
+        );
+        tickerObserver.observe(marqueeEl);
+
+        function tickMarquee(now) {
+          requestAnimationFrame(tickMarquee);
+          const dt = Math.min((now - tickerLastTs) / 1000, 0.1);
+          tickerLastTs = now;
+          if (dt > 0) {
+            globalScrollVelocity *= Math.pow(0.025, dt);
+            tickerSkew *= Math.pow(0.02, dt);
+          }
+          if (!tickerVisible || dt <= 0) return;
+
+          const listWidth = primaryLogoList.getBoundingClientRect().width;
+          if (listWidth <= 0) return;
+
+          const phoneMult = window.innerWidth <= 820 ? 2.4 : 1;
+          tickerX -= (76 + tickerBoost) * dt * (window.innerWidth / 1536) * phoneMult;
+          if (tickerX <= -listWidth) {
+            tickerX += listWidth;
+          }
+          tickerBoost *= Math.pow(0.04, dt);
+          marqueeTrack.style.transform = `translate3d(${tickerX.toFixed(2)}px, 0, 0) skewX(${tickerSkew.toFixed(2)}deg)`;
+        }
+        requestAnimationFrame(tickMarquee);
+      }
+
+      // ── 5. Zxtni Studio Asset Tiles, Live Canvas Motion, Playhead & Pause ───────
+      const tlBox = document.getElementById('tl-box');
+      const pauseBtn = document.getElementById('tl-pause');
+      const pauseIcon = document.getElementById('tl-pause-icon');
+      const playheadEl = document.getElementById('playhead');
+      const playheadPill = document.getElementById('playhead-pill');
+      const tileCanvases = Array.from(document.querySelectorAll('[data-tile-canvas]'));
+
+      // Custom generated Zxtni Studio agency deliverable assets + clean crop regions
+      const TILE_ASSETS = [
+        {
+          src: '/src/assets/images/neurovita_mobile_app_1794730507906.jpg',
+          crop: { x: 0.13, y: 0.13, size: 0.74 },
+        },
+        {
+          src: '/src/assets/images/neurovita_web_platform_1794730508337.jpg',
+          crop: { x: 0.06, y: 0.06, size: 0.88 },
+        },
+        {
+          src: '/src/assets/images/neurovita_ai_neural_1794730508691.jpg',
+          crop: { x: 0.11, y: 0.04, size: 0.78 },
+        },
+        {
+          src: '/src/assets/images/neurovita_design_system_1794730508948.jpg',
+          crop: { x: 0.06, y: 0.03, size: 0.86 },
+        },
+        {
+          src: '/src/assets/images/neurovita_cloud_deploy_1794730509465.jpg',
+          crop: { x: 0.1, y: 0.1, size: 0.8 },
+        },
+      ];
+
+      const tileImages = TILE_ASSETS.map((item, idx) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          tileCanvases[idx].classList.add('is-ready');
+          drawTileFrame(idx, tlTime);
+        };
+        img.src = item.src;
+        return img;
+      });
+
+      let tlTime = 2.4;
+      let tlPaused = false;
+      let tlNearViewport = true;
+      let lastPlayheadTs = performance.now();
+
+      function syncTileCanvasSizes() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        tileCanvases.forEach((cv) => {
+          const rect = cv.parentElement.getBoundingClientRect();
+          const px = Math.max(1, Math.round(rect.width * dpr));
+          if (cv.width !== px || cv.height !== px) {
+            cv.width = px;
+            cv.height = px;
+          }
+        });
+      }
+      syncTileCanvasSizes();
+
+      function drawTileFrame(i, tSec) {
+        const img = tileImages[i];
+        const cv = tileCanvases[i];
+        if (!img.complete || img.naturalWidth === 0) return;
+        const ctx = cv.getContext('2d');
+        if (!ctx) return;
+
+        const { x, y, size } = TILE_ASSETS[i].crop;
+        const phase = (tSec / 6) * Math.PI * 2 + i * 1.15;
+        const zoom = 1 + 0.045 * (0.5 + 0.5 * Math.sin(phase));
+        const cropW = img.naturalWidth * size / zoom;
+        const cropH = img.naturalHeight * size / zoom;
+        const cx = img.naturalWidth * (x + size * 0.5) + Math.cos(phase * 0.8) * img.naturalWidth * 0.012;
+        const cy = img.naturalHeight * (y + size * 0.5) + Math.sin(phase * 0.8) * img.naturalHeight * 0.012;
+
+        const sx = Math.max(0, Math.min(img.naturalWidth - cropW, cx - cropW * 0.5));
+        const sy = Math.max(0, Math.min(img.naturalHeight - cropH, cy - cropH * 0.5));
+
+        ctx.drawImage(img, sx, sy, cropW, cropH, 0, 0, cv.width, cv.height);
+      }
+
+      let activeStageIdx = -1;
+      function renderPlayhead() {
+        const wrapped = ((tlTime % 6) + 6) % 6;
+        const leftPct = 8 + (89.6 * wrapped) / 6;
+        playheadEl.style.left = `${leftPct}%`;
+        const line = Math.min(120, Math.floor(wrapped * 20 + 1e-4) + 1);
+        playheadPill.textContent = `LN ${String(line).padStart(3, '0')}`;
+        const stageIdx = Math.min(PIPELINE_STAGES.length - 1, Math.max(0, Math.round(wrapped)));
+        if (stageIdx !== activeStageIdx) {
+          if (activeStageIdx >= 0 && rulerLabels[activeStageIdx]) {
+            rulerLabels[activeStageIdx].classList.remove('is-active');
+          }
+          if (rulerLabels[stageIdx]) {
+            rulerLabels[stageIdx].classList.add('is-active');
+          }
+          activeStageIdx = stageIdx;
+        }
+      }
+      renderPlayhead();
+
+      function setPauseIcon(paused) {
+        if (paused) {
+          pauseIcon.innerHTML = '<polygon points="2,0.5 10,6 2,11.5"></polygon>';
+          pauseBtn.setAttribute('aria-label', 'Run code runner');
+          pauseBtn.setAttribute('aria-pressed', 'true');
+        } else {
+          pauseIcon.innerHTML =
+            '<rect x="1" y="0.5" width="3" height="11" rx="0.8"></rect><rect x="7" y="0.5" width="3" height="11" rx="0.8"></rect>';
+          pauseBtn.setAttribute('aria-label', 'Pause code runner');
+          pauseBtn.setAttribute('aria-pressed', 'false');
+        }
+        document.body.dataset.timelinePaused = String(paused);
+      }
+
+      if (!reducedMotion) {
+        const tlObserver = new IntersectionObserver(
+          (entries) => {
+            tlNearViewport = entries[0].isIntersecting;
+            if (tlNearViewport) lastPlayheadTs = performance.now();
+          },
+          { rootMargin: '200px' }
+        );
+        tlObserver.observe(document.getElementById('editor-section'));
+
+        pauseBtn.addEventListener('click', () => {
+          tlPaused = !tlPaused;
+          setPauseIcon(tlPaused);
+          if (!tlPaused) lastPlayheadTs = performance.now();
+        });
+
+        function tickTimeline(now) {
+          requestAnimationFrame(tickTimeline);
+          const dt = Math.min((now - lastPlayheadTs) / 1000, 0.1);
+          lastPlayheadTs = now;
+
+          if (!tlPaused && tlNearViewport) {
+            tlTime = (tlTime + dt) % 6;
+            renderPlayhead();
+            for (let i = 0; i < tileCanvases.length; i++) {
+              drawTileFrame(i, tlTime);
+            }
+          }
+        }
+        requestAnimationFrame(tickTimeline);
+      } else {
+        pauseBtn.addEventListener('click', () => {
+          tlPaused = !tlPaused;
+          setPauseIcon(tlPaused);
+        });
+      }
+
+      // ── 6. Timeline <-> Statement FLIP & First Reveal ────────────────────────
+      const trackSlots = Array.from(document.querySelectorAll('[data-track-slot]'));
+      const clipBlocks = Array.from(document.querySelectorAll('[data-clip-block]'));
+      const clipInners = Array.from(document.querySelectorAll('[data-clip-inner]'));
+      const stmtSlots = Array.from(document.querySelectorAll('[data-stmt-slot]'));
+      const statementEl = document.getElementById('statement');
+      const statementHeadingEl = document.getElementById('statement-heading');
+      const editorSection = document.getElementById('editor-section');
+
+      let flipMode = 'tracks';
+      let flightTl = null;
+      let firstRevealPlayed = false;
+      let flipScrollPrevY = window.scrollY;
+      let editorVisible = false;
+
+      function getTargetTransform(i, mode) {
+        if (mode === 'tracks') {
+          return { x: 0, y: 0, scale: 1, rotation: 0 };
+        }
+        const tRect = trackSlots[i].getBoundingClientRect();
+        const sRect = stmtSlots[i].getBoundingClientRect();
+        if (tRect.width === 0 || sRect.width === 0) {
+          return { x: 0, y: 0, scale: 1, rotation: 0 };
+        }
+        const scale = sRect.width / tRect.width;
+        const x = sRect.left - tRect.left + (sRect.width - tRect.width) / 2;
+        const y = sRect.top - tRect.top + (sRect.height - tRect.height) / 2;
+        return { x, y, scale, rotation: 0 };
+      }
+
+      function snapBlocksTo(mode) {
+        if (flightTl) {
+          flightTl.kill();
+          flightTl = null;
+        }
+        for (let i = 0; i < clipBlocks.length; i++) {
+          const target = getTargetTransform(i, mode);
+          gsap.set(clipBlocks[i], {
+            x: target.x,
+            y: target.y,
+            scale: target.scale,
+            rotation: 0,
+            transformOrigin: '50% 50%',
+          });
+        }
+      }
+
+      function flyBlocksTo(nextMode) {
+        if (flipMode === nextMode) return;
+        flipMode = nextMode;
+        document.body.dataset.flipMode = nextMode;
+
+        if (reducedMotion) {
+          snapBlocksTo(nextMode);
+          return;
+        }
+
+        if (flightTl) {
+          flightTl.kill();
+        }
+        flightTl = gsap.timeline();
+
+        const stagger = nextMode === 'sentence' ? 0.1 : 0.05;
+        for (let i = 0; i < clipBlocks.length; i++) {
+          const block = clipBlocks[i];
+          const target = getTargetTransform(i, nextMode);
+          const start = i * stagger;
+          const wobble = (Math.random() * 2 - 1) * 15;
+
+          flightTl.to(
+            block,
+            {
+              x: target.x,
+              y: target.y,
+              scale: target.scale,
+              duration: 1.5,
+              ease: 'power2.inOut',
+            },
+            start
+          );
+          flightTl.to(
+            block,
+            {
+              rotation: wobble,
+              duration: 0.75,
+              ease: 'power2.in',
+            },
+            start
+          );
+          flightTl.to(
+            block,
+            {
+              rotation: 0,
+              duration: 0.75,
+              ease: 'power2.out',
+            },
+            start + 0.75
+          );
+        }
+      }
+
+      function maybeTriggerFirstReveal() {
+        if (reducedMotion || firstRevealPlayed || flipMode !== 'tracks') return;
+        const rect = tlBox.getBoundingClientRect();
+        if (rect.top <= window.innerHeight + 300) {
+          firstRevealPlayed = true;
+          gsap.fromTo(
+            clipInners[0],
+            { y: -300, rotation: 15 },
+            { y: 0, rotation: 0, duration: 2.0, ease: 'power1.out' }
+          );
+        }
+      }
+
+      const editorObserver = new IntersectionObserver(
+        (entries) => {
+          editorVisible = entries[0].isIntersecting;
+          if (editorVisible) maybeTriggerFirstReveal();
+        },
+        { rootMargin: '300px 0px 300px 0px' }
+      );
+      editorObserver.observe(editorSection);
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          const curY = window.scrollY;
+          const dir = curY - flipScrollPrevY;
+          flipScrollPrevY = curY;
+
+          maybeTriggerFirstReveal();
+
+          if (!editorVisible || dir === 0) return;
+
+          const sRect = statementHeadingEl.getBoundingClientRect();
+          const sentenceOnScreen = sRect.top < window.innerHeight * 0.88 && sRect.bottom > 0;
+          if (!sentenceOnScreen) return;
+
+          if (dir > 0 && flipMode !== 'sentence') {
+            flyBlocksTo('sentence');
+          } else if (dir < 0 && flipMode !== 'tracks') {
+            flyBlocksTo('tracks');
+          }
+        },
+        { passive: true }
+      );
+
+      let prevWindowWidth = window.innerWidth;
+      window.addEventListener('resize', () => {
+        syncTileCanvasSizes();
+        for (let i = 0; i < tileCanvases.length; i++) drawTileFrame(i, tlTime);
+        if (window.innerWidth !== prevWindowWidth) {
+          prevWindowWidth = window.innerWidth;
+          snapBlocksTo(flipMode);
+        }
+      });
+
+      document.fonts.ready.then(() => {
+        snapBlocksTo(flipMode);
+        if (window.ScrollTrigger) ScrollTrigger.refresh();
+      });
+
+      // ── 6B. Interactive Systems Deck, Case Study Dialog, Scope Estimator & Scroll Choreography
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+      }
+
+      const SYSTEMS_DATA = [
+        {
+          img: '/src/assets/images/neurovita_web_platform_1794730508337.jpg',
+          alt: 'Zxtni Studio Web Platforms architecture visual',
+          stack: 'React · TypeScript · Edge Runtime',
+          headline: 'Multi-region web products tuned for instant first paint and conversion velocity.',
+          outcome: '42ms median global TTFB across 18 edge regions',
+          ctaLabel: 'Scope Web Platform',
+          scopeValue: 'Web Platform & SaaS',
+        },
+        {
+          img: '/src/assets/images/neurovita_mobile_app_1794730507906.jpg',
+          alt: 'Zxtni Studio Native Mobile architecture visual',
+          stack: 'Swift · Kotlin · React Native',
+          headline: 'Fluid iOS and Android apps with hardware biometrics, offline sync, and 60fps motion.',
+          outcome: '99.98% crash-free sessions across 1.8M active installs',
+          ctaLabel: 'Scope Mobile App',
+          scopeValue: 'iOS & Android Mobile App',
+        },
+        {
+          img: '/src/assets/images/neurovita_ai_neural_1794730508691.jpg',
+          alt: 'Zxtni Studio AI and Neural Systems visual',
+          stack: 'Streaming LLMs · Vector Search · Realtime APIs',
+          headline: 'Production AI workflows, domain copilots, and semantic indexing engineered with strict guardrails.',
+          outcome: '410ms streaming first token across 64K daily queries',
+          ctaLabel: 'Scope AI System',
+          scopeValue: 'AI & Neural Systems',
+        },
+        {
+          img: '/src/assets/images/neurovita_design_system_1794730508948.jpg',
+          alt: 'Zxtni Studio Design Systems visual',
+          stack: 'Figma Tokens · Accessible Primitives · Visual CI',
+          headline: 'Unified UI component foundations that keep web and mobile teams shipping in lockstep.',
+          outcome: '3.4x faster feature launches across multi-product squads',
+          ctaLabel: 'Scope Design System',
+          scopeValue: 'Full-Stack Product & Design System',
+        },
+      ];
+
+      const sysTabs = Array.from(document.querySelectorAll('[data-sys-tab]'));
+      const sysStack3D = document.getElementById('sys-stack-3d');
+      const sysImg = document.getElementById('sys-stage-img');
+      const sysStack = document.getElementById('sys-stage-stack');
+      const sysHeadline = document.getElementById('sys-stage-headline');
+      const sysOutcome = document.getElementById('sys-stage-outcome');
+      const sysCta = document.getElementById('sys-stage-cta');
+      let currentSysIdx = 0;
+
+      function setActiveSystem(idx) {
+        const item = SYSTEMS_DATA[idx];
+        if (!item) return;
+        currentSysIdx = idx;
+        sysTabs.forEach((btn, i) => {
+          const active = i === idx;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-selected', String(active));
+        });
+        sysImg.src = item.img;
+        sysImg.alt = item.alt;
+        sysStack.textContent = item.stack;
+        sysHeadline.textContent = item.headline;
+        sysOutcome.textContent = item.outcome;
+        sysCta.textContent = item.ctaLabel;
+        if (!reducedMotion && window.gsap) {
+          gsap.fromTo(
+            sysStack3D,
+            { rotateY: idx % 2 === 0 ? -9 : 9, rotateX: 5 },
+            { rotateY: 0, rotateX: 0, duration: 0.55, ease: 'power2.out' }
+          );
+        }
+      }
+
+      sysTabs.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          setActiveSystem(Number(btn.dataset.sysTab));
+        });
+      });
+
+      // Live 2D Kinetic Architectural Lattice Canvas inside Section 4's Back Layer
+      const systemsCanvas = document.getElementById('systems-canvas');
+      if (systemsCanvas) {
+        const sCtx = systemsCanvas.getContext('2d');
+        let sysCanvasVisible = false;
+        let sysPhase = 0;
+
+        function resizeSysCanvas() {
+          const rect = systemsCanvas.parentElement.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            systemsCanvas.width = Math.round(rect.width);
+            systemsCanvas.height = Math.round(rect.height);
+          }
+        }
+        resizeSysCanvas();
+        window.addEventListener('resize', resizeSysCanvas);
+
+        function drawSysLattice(t) {
+          if (!sCtx || systemsCanvas.width === 0) return;
+          const w = systemsCanvas.width;
+          const h = systemsCanvas.height;
+          sCtx.clearRect(0, 0, w, h);
+
+          const cols = 12;
+          const rows = 9;
+          const mode = currentSysIdx;
+          sCtx.strokeStyle = mode === 2 ? 'rgba(255, 106, 43, 0.36)' : 'rgba(114, 159, 255, 0.34)';
+          sCtx.lineWidth = 1.1;
+
+          for (let r = 0; r < rows; r++) {
+            sCtx.beginPath();
+            for (let c = 0; c <= cols; c++) {
+              const x = (c / cols) * w;
+              const wave =
+                mode === 1
+                  ? Math.sin(c * 0.6 + t * 2 + r * 0.4) * 14
+                  : mode === 2
+                    ? Math.cos(c * 0.8 - t * 2.2) * Math.sin(r * 0.7 + t) * 16
+                    : Math.sin(c * 0.5 + t * 1.4 + r * 0.5) * 10;
+              const y = ((r + 0.5) / rows) * h + wave;
+              if (c === 0) sCtx.moveTo(x, y);
+              else sCtx.lineTo(x, y);
+            }
+            sCtx.stroke();
+          }
+
+          sCtx.fillStyle = mode === 2 ? 'rgba(255, 106, 43, 0.72)' : 'rgba(147, 197, 253, 0.65)';
+          for (let r = 1; r < rows; r += 2) {
+            for (let c = 1; c < cols; c += 2) {
+              const x = (c / cols) * w;
+              const y = ((r + 0.5) / rows) * h + Math.sin(c * 0.5 + t * 1.4 + r * 0.5) * 10;
+              sCtx.beginPath();
+              sCtx.arc(x, y, 2.5, 0, Math.PI * 2);
+              sCtx.fill();
+            }
+          }
+        }
+        drawSysLattice(0);
+
+        if (!reducedMotion) {
+          const sysObs = new IntersectionObserver(
+            (entries) => {
+              sysCanvasVisible = entries[0].isIntersecting;
+            },
+            { threshold: 0 }
+          );
+          sysObs.observe(document.getElementById('systems'));
+
+          function tickSysCanvas() {
+            requestAnimationFrame(tickSysCanvas);
+            if (!sysCanvasVisible) return;
+            sysPhase += 0.025;
+            drawSysLattice(sysPhase);
+          }
+          requestAnimationFrame(tickSysCanvas);
+
+          const sysStageEl = document.getElementById('sys-stage');
+          sysStageEl.addEventListener('pointermove', (e) => {
+            if (window.innerWidth <= 820) return;
+            const rect = sysStageEl.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            sysStack3D.style.transform = `rotateY(${(nx * 10).toFixed(2)}deg) rotateX(${(-ny * 8).toFixed(2)}deg)`;
+          });
+          sysStageEl.addEventListener('pointerleave', () => {
+            sysStack3D.style.transform = 'rotateY(0deg) rotateX(0deg)';
+          });
+        }
+      }
+
+      const dialogCaseDetail = document.getElementById('dialog-case-detail');
+      const dialogCaseMeta = document.getElementById('dialog-case-meta');
+      const dialogCaseBlock = document.getElementById('dialog-case-block');
+      const dialogCaseOutcome = document.getElementById('dialog-case-outcome');
+      const dialogCaseCta = document.getElementById('dialog-case-cta');
+      const dialogScopeSelect = document.getElementById('dialog-scope');
+
+      const CASE_STUDIES = [
+        {
+          title: 'Veltrix — Biometric Wealth Engine',
+          meta: 'Native Mobile · Swift, Kotlin & Sync Engine · 8 Weeks',
+          body: 'Veltrix needed a sub-second mobile trading experience with local offline state and biometric trade signing. Zxtni Studio rebuilt the core client architecture, cutting cold launch time by 62% and unifying iOS and Android gesture physics.',
+          outcome: '1.8M installs · 99.98% crash-free · 4.9★ App Store rating',
+          scopeValue: 'iOS & Android Mobile App',
+        },
+        {
+          title: 'KINETIQ — Real-Time Telemetry Suite',
+          meta: 'Web Platform · React, WebSockets & Edge Cache · 10 Weeks',
+          body: 'KINETIQ faced browser freezes when rendering 50,000 live logistics sensors. We re-architected their streaming pipeline with batched canvas rendering and edge state workers, lifting enterprise trial conversions immediately.',
+          outcome: '+142% enterprise conversion · 38KB core bundle',
+          scopeValue: 'Web Platform & SaaS',
+        },
+        {
+          title: 'SYNTRA — Multi-Model Copilot',
+          meta: 'AI Systems · Hybrid Vector Search & Streaming · 6 Weeks',
+          body: 'SYNTRA wanted an embedded assistant capable of citing internal documentation in real time. We built an evaluation-backed RAG pipeline with deterministic citation guards and sub-half-second first-token delivery.',
+          outcome: '410ms first token · 64K daily queries · 94% resolution accuracy',
+          scopeValue: 'AI & Neural Systems',
+        },
+        {
+          title: 'FinStack — Unified Design System',
+          meta: 'Design System · Tokens, React & React Native · 7 Weeks',
+          body: 'Four engineering squads at FinStack were duplicating UI components across web and mobile. Zxtni Studio shipped 180 WCAG AA primitives with automated visual regression CI and shared design tokens.',
+          outcome: '3.4x faster feature releases · 100% WCAG AA audit pass',
+          scopeValue: 'Full-Stack Product & Design System',
+        },
+      ];
+
+      let activeCaseScope = 'Web Platform & SaaS';
+      function openCaseDialog(caseId) {
+        const cs = CASE_STUDIES[caseId];
+        if (!cs) return;
+        activeCaseScope = cs.scopeValue;
+        dialogTitle.textContent = cs.title;
+        dialogBody.textContent = '';
+        dialogBody.hidden = true;
+        dialogForm.hidden = true;
+        const existingMsg = dialog.querySelector('.dialog-msg');
+        if (existingMsg) existingMsg.remove();
+        dialogCaseMeta.textContent = cs.meta;
+        dialogCaseBlock.textContent = cs.body;
+        dialogCaseOutcome.textContent = cs.outcome;
+        dialogCaseDetail.hidden = false;
+        dialog.showModal();
+      }
+
+      const origOpenActionDialog = openActionDialog;
+      openActionDialog = function (mode, presetScope) {
+        dialogBody.hidden = false;
+        dialogCaseDetail.hidden = true;
+        origOpenActionDialog(mode);
+        if (presetScope) {
+          const exists = Array.from(dialogScopeSelect.options).some((opt) => opt.value === presetScope);
+          if (!exists) {
+            const opt = document.createElement('option');
+            opt.value = presetScope;
+            opt.textContent = presetScope;
+            dialogScopeSelect.appendChild(opt);
+          }
+          dialogScopeSelect.value = presetScope;
+        }
+      };
+
+      sysCta.addEventListener('click', () => {
+        openActionDialog('project', SYSTEMS_DATA[currentSysIdx].scopeValue);
+      });
+
+      document.querySelectorAll('[data-case-id]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          openCaseDialog(Number(btn.dataset.caseId));
+        });
+      });
+
+      dialogCaseCta.addEventListener('click', () => {
+        dialogCaseDetail.hidden = true;
+        dialogBody.hidden = false;
+        openActionDialog('project', activeCaseScope);
+      });
+
+      // Live Scope & Squad Blueprint Configurator
+      const capBtns = Array.from(document.querySelectorAll('[data-cap]'));
+      const horizonBtns = Array.from(document.querySelectorAll('[data-horizon]'));
+      const estSquadEl = document.getElementById('est-squad');
+      const estTimelineEl = document.getElementById('est-timeline');
+      const squadNodesEl = document.getElementById('squad-nodes');
+      const selectedCaps = new Set(['web']);
+      let selectedHorizon = 'flagship';
+
+      function computeScopeEstimate() {
+        const count = Math.max(1, selectedCaps.size);
+        const squadSize =
+          selectedHorizon === 'partner'
+            ? Math.max(4, count + 2)
+            : selectedHorizon === 'flagship'
+              ? Math.max(3, count + 1)
+              : Math.max(2, count);
+        const squadLabel = `${squadSize} Senior Engineers & Designers`;
+        const timelineLabel =
+          selectedHorizon === 'sprint'
+            ? `${4 + Math.min(2, count - 1)} Weeks to V1`
+            : selectedHorizon === 'flagship'
+              ? `${8 + count * 2} Weeks Full Launch`
+              : 'Continuous Weekly Releases';
+        const capNames = {
+          web: 'Web Platform',
+          mobile: 'Native Mobile',
+          ai: 'AI Systems',
+          design: 'Design System',
+        };
+        const roles = [{ code: 'ARCH', title: 'Principal Architect' }];
+        if (selectedCaps.has('web')) roles.push({ code: 'WEB', title: 'Frontend & Edge Lead' });
+        if (selectedCaps.has('mobile')) roles.push({ code: 'MOB', title: 'Swift / Kotlin Lead' });
+        if (selectedCaps.has('ai')) roles.push({ code: 'ML', title: 'AI Systems Engineer' });
+        if (selectedCaps.has('design')) roles.push({ code: 'DS', title: 'Design Systems Lead' });
+        if (selectedHorizon === 'partner') roles.push({ code: 'QA', title: 'Release & Perf Lead' });
+
+        const scopeSummary = `${Array.from(selectedCaps).map((c) => capNames[c]).join(' + ')} (${timelineLabel})`;
+        return { squadLabel, timelineLabel, scopeSummary, roles };
+      }
+
+      function renderScopeEstimate() {
+        const est = computeScopeEstimate();
+        estSquadEl.textContent = est.squadLabel;
+        estTimelineEl.textContent = est.timelineLabel;
+        squadNodesEl.innerHTML = '';
+        est.roles.forEach((r) => {
+          const node = document.createElement('span');
+          node.className = 'squad-node';
+          node.innerHTML = `<span class="squad-node-role">${r.code}</span><span>${r.title}</span>`;
+          squadNodesEl.appendChild(node);
+        });
+      }
+      renderScopeEstimate();
+
+      capBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const cap = btn.dataset.cap;
+          if (selectedCaps.has(cap)) {
+            if (selectedCaps.size === 1) return;
+            selectedCaps.delete(cap);
+          } else {
+            selectedCaps.add(cap);
+          }
+          capBtns.forEach((b) => {
+            const on = selectedCaps.has(b.dataset.cap);
+            b.classList.toggle('is-selected', on);
+            b.setAttribute('aria-pressed', String(on));
+          });
+          renderScopeEstimate();
+        });
+      });
+
+      horizonBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          selectedHorizon = btn.dataset.horizon;
+          horizonBtns.forEach((b) => {
+            const on = b.dataset.horizon === selectedHorizon;
+            b.classList.toggle('is-selected', on);
+            b.setAttribute('aria-pressed', String(on));
+          });
+          renderScopeEstimate();
+        });
+      });
+
+      document.getElementById('closing-cta-btn').addEventListener('click', () => {
+        openActionDialog('project', computeScopeEstimate().scopeSummary);
+      });
+      document.getElementById('footer-contact-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        openActionDialog('contact');
+      });
+
+      // Live 2D Kinetic Tunnel Canvas inside Section 6 (Studio Iris Chamber)
+      const studioCanvas = document.getElementById('studio-canvas');
+      if (studioCanvas) {
+        const stCtx = studioCanvas.getContext('2d');
+        let studioCanvasVisible = false;
+        const stars = Array.from({ length: 70 }, (_, idx) => ({
+          angle: (idx / 70) * Math.PI * 2 + (idx % 7) * 0.3,
+          depth: ((idx * 17) % 100) / 100,
+          speed: 0.004 + (idx % 5) * 0.0012,
+        }));
+
+        function resizeStudioCanvas() {
+          const rect = studioCanvas.parentElement.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            studioCanvas.width = Math.round(rect.width);
+            studioCanvas.height = Math.round(rect.height);
+          }
+        }
+        resizeStudioCanvas();
+        window.addEventListener('resize', resizeStudioCanvas);
+
+        function drawStudioTunnel(advance) {
+          if (!stCtx || studioCanvas.width === 0) return;
+          const w = studioCanvas.width;
+          const h = studioCanvas.height;
+          const cx = w * 0.5;
+          const cy = h * 0.42;
+          stCtx.clearRect(0, 0, w, h);
+
+          const warpMult = 1 + Math.min(5.5, Math.abs(globalScrollVelocity) * 0.0028);
+
+          for (const s of stars) {
+            if (advance) {
+              s.depth += s.speed * warpMult;
+              if (s.depth > 1) s.depth = 0.05;
+            }
+            const r1 = s.depth * Math.max(w, h) * 0.68;
+            const streakSpan = 0.075 + (warpMult - 1) * 0.02;
+            const r0 = Math.max(0, s.depth - streakSpan) * Math.max(w, h) * 0.68;
+            const x0 = cx + Math.cos(s.angle) * r0;
+            const y0 = cy + Math.sin(s.angle) * r0;
+            const x1 = cx + Math.cos(s.angle) * r1;
+            const y1 = cy + Math.sin(s.angle) * r1;
+            const isAccent = Math.abs(s.angle % 1.5) < 0.14;
+            stCtx.strokeStyle = isAccent
+              ? `rgba(255, 106, 43, ${(s.depth * 0.34).toFixed(3)})`
+              : `rgba(147, 197, 253, ${(s.depth * 0.45).toFixed(3)})`;
+            stCtx.lineWidth = 1.1 + s.depth * 1.6;
+            stCtx.beginPath();
+            stCtx.moveTo(x0, y0);
+            stCtx.lineTo(x1, y1);
+            stCtx.stroke();
+          }
+        }
+        drawStudioTunnel(false);
+
+        if (!reducedMotion) {
+          const stObs = new IntersectionObserver(
+            (entries) => {
+              studioCanvasVisible = entries[0].isIntersecting;
+            },
+            { threshold: 0 }
+          );
+          stObs.observe(document.getElementById('studio'));
+
+          function tickStudioCanvas() {
+            requestAnimationFrame(tickStudioCanvas);
+            if (!studioCanvasVisible) return;
+            drawStudioTunnel(true);
+          }
+          requestAnimationFrame(tickStudioCanvas);
+        }
+      }
+
+      // ── 6C. Smooth Momentum Scroll (Lenis) & Immersive Scroll Choreography ────
+      if (!reducedMotion && window.gsap && window.ScrollTrigger) {
+        let lenis = null;
+        if (window.Lenis) {
+          try {
+            lenis = new window.Lenis({
+              duration: 1.18,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+              smoothWheel: true,
+              wheelMultiplier: 1.0,
+              touchMultiplier: 1.4,
+            });
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+              lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+          } catch {
+            lenis = null;
+          }
+        }
+
+        // Sync smooth anchor navigation through Lenis when active
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener('click', (e) => {
+            const id = anchor.getAttribute('href');
+            if (!id || id === '#' || id === '#contact') return;
+            const target = document.querySelector(id);
+            if (!target) return;
+            e.preventDefault();
+            if (lenis) {
+              lenis.scrollTo(target, { offset: id === '#top' ? 0 : -88 });
+            } else {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+
+        // Top hairline scroll progress bar
+        const scrollProgressBar = document.getElementById('scroll-progress');
+        if (scrollProgressBar) {
+          gsap.to(scrollProgressBar, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: document.body,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 0.15,
+            },
+          });
+        }
+
+        // Section 1 Hero exit parallax
+        gsap.to('#hero-headline', {
+          y: -90,
+          scale: 0.95,
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: '62% top',
+            scrub: 0.3,
+          },
+        });
+
+        gsap.to('.hero-right', {
+          y: -155,
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: '80% top',
+            scrub: 0.3,
+          },
+        });
+
+        // Section 3 Coding Timeline 3D perspective reveal + statement rise
+        gsap.fromTo(
+          '#tl-box',
+          { rotateX: 11, scale: 0.9, y: 68, opacity: 0.45 },
+          {
+            rotateX: 0,
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#timeline',
+              start: 'top 92%',
+              end: 'top 25%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          '#statement',
+          { y: 54, opacity: 0.25, scale: 0.97 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#statement',
+              start: 'top 90%',
+              end: 'top 42%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        // Section 4 Spatial Architecture Stage unfold + Z-layer parallax
+        const portalShell = document.getElementById('portal-shell');
+        gsap.fromTo(
+          portalShell,
+          { scale: 0.85, rotateX: 7, y: 76, borderRadius: '72px' },
+          {
+            scale: 1,
+            rotateX: 0,
+            y: 0,
+            borderRadius: '44px',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#systems',
+              start: 'top 92%',
+              end: 'top 18%',
+              scrub: 0.6,
+            },
+          }
+        );
+
+        gsap.from('.sys-tab', {
+          x: -36,
+          opacity: 0,
+          duration: 0.65,
+          stagger: 0.09,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.sys-list',
+            start: 'top 84%',
+            once: true,
+          },
+        });
+
+        // Section 5 Curved 3D Cinema Reel + inner artwork parallax
+        const workTrack = document.getElementById('work-track');
+        const workFill = document.getElementById('work-progress-fill');
+        const workLabel = document.getElementById('work-progress-label');
+        const workCards = Array.from(document.querySelectorAll('.work-card'));
+        const workCardImgs = workCards.map((card) => card.querySelector('.work-card-media img'));
+        const mm = gsap.matchMedia();
+
+        function updateWorkCardCurves() {
+          const vw = window.innerWidth;
+          const centerX = vw * 0.5;
+          workCards.forEach((card, idx) => {
+            const rect = card.getBoundingClientRect();
+            const cardMid = rect.left + rect.width * 0.5;
+            const norm = Math.max(-1.25, Math.min(1.25, (cardMid - centerX) / (vw * 0.52)));
+            const rotY = -norm * 15;
+            const tz = -Math.abs(norm) * 90;
+            const sc = 1 - Math.min(0.14, Math.abs(norm) * 0.1);
+            card.style.transform = `translateZ(${tz.toFixed(1)}px) rotateY(${rotY.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+            const img = workCardImgs[idx];
+            if (img) {
+              img.style.transform = `translateX(${(-norm * 24).toFixed(1)}px) scale(1.08)`;
+            }
+          });
+        }
+
+        gsap.from('.work-header', {
+          y: 36,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '#work',
+            start: 'top 84%',
+            once: true,
+          },
+        });
+
+        mm.add('(min-width: 821px)', () => {
+          updateWorkCardCurves();
+          const getDist = () => Math.max(0, workTrack.scrollWidth - window.innerWidth + 110);
+          gsap.to(workTrack, {
+            x: () => -getDist(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#work',
+              pin: true,
+              scrub: 0.7,
+              start: 'top top',
+              end: () => `+=${Math.max(850, getDist())}`,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const p = self.progress;
+                workFill.style.transform = `scaleX(${Math.max(0.18, p)})`;
+                const cardIdx = Math.min(4, Math.max(1, Math.floor(p * 4) + 1));
+                workLabel.textContent = `0${cardIdx} / 04`;
+                updateWorkCardCurves();
+              },
+            },
+          });
+
+          // Section 6 Iris Wipe + Deep Z-layer parallax in Section 4
+          gsap.fromTo(
+            '#studio',
+            { clipPath: 'inset(10% 8% 10% 8% round 52px)' },
+            {
+              clipPath: 'inset(0% 0% 0% 0% round 0px)',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.studio-outer',
+                start: 'top 92%',
+                end: 'top 32%',
+                scrub: 0.5,
+              },
+            }
+          );
+
+          gsap.fromTo(
+            '.sys-layer-glass',
+            { y: 42 },
+            {
+              y: -16,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#systems',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                scrub: 0.5,
+              },
+            }
+          );
+        });
+
+        // Section 6 Counter-drifting manifesto lines + 3D tilt-up pillar stagger
+        gsap.fromTo(
+          '#manifesto-line-1',
+          { x: 76, scale: 0.94, opacity: 0.15 },
+          {
+            x: 0,
+            scale: 1,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#studio',
+              start: 'top 90%',
+              end: 'top 32%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          '#manifesto-line-2',
+          { x: -76, scale: 0.94, opacity: 0.15 },
+          {
+            x: 0,
+            scale: 1,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#studio',
+              start: 'top 90%',
+              end: 'top 32%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        gsap.from('.pillar-item', {
+          y: 54,
+          rotateX: 14,
+          scale: 0.95,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.14,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '#pillars-grid',
+            start: 'top 84%',
+            once: true,
+          },
+        });
+
+        // Section 7 Parallax ascent
+        gsap.fromTo(
+          '.closing-grid > div:first-child',
+          { y: 44, opacity: 0.25 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#contact-cta',
+              start: 'top 88%',
+              end: 'top 35%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          '#scope-estimator',
+          { y: 84, scale: 0.95 },
+          {
+            y: 0,
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#contact-cta',
+              start: 'top 88%',
+              end: 'top 30%',
+              scrub: 0.5,
+            },
+          }
+        );
+
+        // Subtle magnetic cursor pull on primary CTAs (desktop)
+        document.querySelectorAll('#hero-cta, #closing-cta-btn, #start-project-nav, #sys-stage-cta').forEach((btn) => {
+          const xTo = gsap.quickTo(btn, 'x', { duration: 0.35, ease: 'power3.out' });
+          const yTo = gsap.quickTo(btn, 'y', { duration: 0.35, ease: 'power3.out' });
+          btn.addEventListener('pointermove', (e) => {
+            if (window.innerWidth <= 820) return;
+            const r = btn.getBoundingClientRect();
+            const dx = ((e.clientX - r.left) / r.width - 0.5) * 14;
+            const dy = ((e.clientY - r.top) / r.height - 0.5) * 10;
+            xTo(dx);
+            yTo(dy);
+          });
+          btn.addEventListener('pointerleave', () => {
+            xTo(0);
+            yTo(0);
+          });
+        });
+
+        const bmCounters = { lat: 0, crash: 96.0, weeks: 0 };
+        ScrollTrigger.create({
+          trigger: '#benchmarks-row',
+          start: 'top 86%',
+          once: true,
+          onEnter: () => {
+            gsap.to(bmCounters, {
+              lat: 42,
+              crash: 99.98,
+              weeks: 6,
+              duration: 1.2,
+              ease: 'power2.out',
+              onUpdate: () => {
+                document.getElementById('bm-latency').textContent = `${Math.round(bmCounters.lat)}ms`;
+                document.getElementById('bm-crash').textContent = `${bmCounters.crash.toFixed(2)}%`;
+                document.getElementById('bm-weeks').textContent = `${Math.round(bmCounters.weeks)} wks`;
+              },
+            });
+          },
+        });
+      }
+
+      // ── 7. Loader & Entrance Orchestration ───────────────────────────────────
+      const loaderEl = document.getElementById('loader');
+      const loaderLine = document.getElementById('loader-line');
+      const headlineInners = document.querySelectorAll('#hero-headline .line-inner');
+      const heroSubtitle = document.getElementById('hero-subtitle');
+      const heroCta = document.getElementById('hero-cta');
+      const headerPills = [
+        document.getElementById('header-left-pill'),
+        document.getElementById('header-right-pill'),
+      ];
+
+      let sceneFirstFrameReady = false;
+      let minLoaderTimeReady = false;
+      let entranceStarted = false;
+      let start3DEntranceFn = null;
+
+      if (reducedMotion) {
+        if (loaderEl) loaderEl.remove();
+        document.body.dataset.loaderDone = 'true';
+        entranceStarted = true;
+      } else {
+        gsap.set(headlineInners, { yPercent: 105 });
+        gsap.set([heroSubtitle, heroCta], { y: 24, opacity: 0 });
+        gsap.set(headerPills, { y: -20, opacity: 0 });
+
+        gsap.to(loaderLine, {
+          y: 0,
+          yPercent: 0,
+          duration: 0.7,
+          delay: 0.15,
+          ease: 'expo.out',
+        });
+
+        setTimeout(() => {
+          minLoaderTimeReady = true;
+          tryExitLoader();
+        }, 1400);
+
+        setTimeout(() => {
+          sceneFirstFrameReady = true;
+          minLoaderTimeReady = true;
+          tryExitLoader();
+        }, 6000);
+      }
+
+      function playPageEntrance() {
+        gsap.to(headlineInners, {
+          yPercent: 0,
+          duration: 1.2,
+          delay: 0.35,
+          ease: 'expo.out',
+        });
+        gsap.to([heroSubtitle, heroCta], {
+          y: 0,
+          opacity: 1,
+          duration: 1.0,
+          delay: 0.55,
+          stagger: 0.1,
+          ease: 'expo.out',
+        });
+        gsap.to(headerPills, {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          delay: 0.4,
+          stagger: 0.08,
+          ease: 'expo.out',
+        });
+        if (start3DEntranceFn) {
+          start3DEntranceFn();
+        }
+      }
+
+      function tryExitLoader() {
+        if (entranceStarted || !sceneFirstFrameReady || !minLoaderTimeReady) return;
+        entranceStarted = true;
+
+        const exitTl = gsap.timeline({
+          onComplete: () => {
+            if (loaderEl && loaderEl.parentNode) loaderEl.remove();
+            document.body.dataset.loaderDone = 'true';
+          },
+        });
+
+        exitTl.to(loaderLine, {
+          yPercent: -110,
+          duration: 0.55,
+          ease: 'expo.in',
+        });
+        exitTl.add(() => playPageEntrance(), '-=0.15');
+        exitTl.to(
+          loaderEl,
+          {
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 0.8,
+            ease: 'expo.inOut',
+          },
+          '<'
+        );
+      }
+
+      // ── 8. Three.js + Rapier 3D Keychain (Zxtni Studio Edition) ─────────────────
+      async function initHero3D() {
+        const heroEl = document.getElementById('hero');
+        const canvas = document.getElementById('hero-canvas');
+
+        await RAPIER.init();
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: !isSoftwareGl,
+          alpha: true,
+          preserveDrawingBuffer: true,
+        });
+        renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.setClearColor(0xe3e9f2, 0);
+
+        const scene = new THREE.Scene();
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        scene.environmentIntensity = 1.05;
+        pmrem.dispose();
+
+        const rimLight = new THREE.DirectionalLight(0xffffff, 1.6);
+        rimLight.position.set(-29, -14.8, -35);
+        rimLight.target.position.set(0, 2.2, 0);
+        scene.add(rimLight, rimLight.target);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
+        keyLight.position.set(6, 10, 12);
+        scene.add(keyLight);
+
+        const rig = new THREE.Group();
+        rig.position.set(0, reducedMotion ? 0 : -4, 10);
+        scene.add(rig);
+
+        const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 500);
+        rig.add(camera);
+
+        function updateHeroViewport() {
+          const rect = heroEl.getBoundingClientRect();
+          const w = Math.max(1, rect.width);
+          const h = Math.max(1, rect.height);
+          const aspect = w / h;
+          camera.aspect = aspect;
+          if (aspect >= 0.9) {
+            camera.position.set(0, 1.06, -4.4);
+          } else {
+            camera.position.set(0, -0.9, 2.2);
+          }
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h, false);
+        }
+        updateHeroViewport();
+
+        const ringCenter = new THREE.Vector3(0, 3.2, 0);
+        const steelMat = new THREE.MeshStandardMaterial({
+          color: 0xcfd3da,
+          metalness: 1,
+          roughness: 0.18,
+        });
+        const linkSteelMat = new THREE.MeshStandardMaterial({
+          color: 0xa9afba,
+          metalness: 1,
+          roughness: 0.2,
+        });
+        const cobaltMat = new THREE.MeshPhysicalMaterial({
+          color: 0x1430e0,
+          roughness: 0.12,
+          clearcoat: 1,
+          clearcoatRoughness: 0.04,
+        });
+
+        const mainKeyring = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.04, 24, 64), steelMat);
+        mainKeyring.position.copy(ringCenter);
+        scene.add(mainKeyring);
+
+        const fontLoader = new FontLoader();
+        const helvetikerFont = await new Promise((resolve, reject) => {
+          fontLoader.load(
+            'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/fonts/helvetiker_bold.typeface.json',
+            resolve,
+            undefined,
+            reject
+          );
+        });
+
+        const loopGeo = new THREE.TorusGeometry(0.075, 0.0225, 16, 32);
+        function makeLoop(y, radius = 0.075) {
+          const geo = radius === 0.075 ? loopGeo : new THREE.TorusGeometry(radius, 0.0225, 16, 32);
+          const m = new THREE.Mesh(geo, steelMat);
+          m.rotation.y = Math.PI / 2;
+          m.position.set(0, y, 0);
+          return m;
+        }
+
+        // Procedural holographic mobile app UI screen texture for Zxtni Studio phone charm
+        function createAppScreenTexture() {
+          const cv = document.createElement('canvas');
+          cv.width = 256;
+          cv.height = 384;
+          const ctx = cv.getContext('2d');
+
+          const grad = ctx.createLinearGradient(0, 0, 256, 384);
+          const stops = ['#b8f1ff', '#c9b8ff', '#ffc2ec', '#fff1b8', '#b8ffd9', '#9fc4ff', '#e2b8ff'];
+          stops.forEach((c, idx) => grad.addColorStop(idx / (stops.length - 1), c));
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 256, 384);
+
+          let seed = 77;
+          const rand = () => {
+            seed = (seed * 1664525 + 1013904223) >>> 0;
+            return seed / 4294967296;
+          };
+          for (let i = 0; i < 20; i++) {
+            ctx.save();
+            ctx.globalAlpha = 0.16;
+            ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#7b8cff';
+            ctx.beginPath();
+            ctx.ellipse(
+              rand() * 256,
+              rand() * 384,
+              22 + rand() * 44,
+              14 + rand() * 32,
+              rand() * Math.PI,
+              0,
+              Math.PI * 2
+            );
+            ctx.fill();
+            ctx.restore();
+          }
+
+          // Crisp minimalist mobile UI cards inside screen
+          ctx.fillStyle = 'rgba(20, 48, 224, 0.22)';
+          ctx.beginPath();
+          ctx.roundRect(24, 54, 208, 108, 20);
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
+          ctx.beginPath();
+          ctx.roundRect(24, 180, 98, 96, 18);
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(255, 85, 18, 0.78)';
+          ctx.beginPath();
+          ctx.roundRect(134, 180, 98, 96, 18);
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(17, 20, 24, 0.85)';
+          ctx.beginPath();
+          ctx.roundRect(24, 296, 208, 44, 14);
+          ctx.fill();
+
+          const tex = new THREE.CanvasTexture(cv);
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          return tex;
+        }
+
+        // Charm 1: Holographic Mobile App Card / Glass Smartphone
+        function buildMobileAppCharm() {
+          const g = new THREE.Group();
+
+          const shellGeo = new RoundedBoxGeometry(0.76, 1.06, 0.14, 5, 0.08);
+          const shellMat = new THREE.MeshPhysicalMaterial({
+            color: 0xe9eeff,
+            roughness: 0.08,
+            transmission: isSoftwareGl ? 0 : 1,
+            transparent: isSoftwareGl,
+            opacity: isSoftwareGl ? 0.42 : 1,
+            depthWrite: !isSoftwareGl,
+            thickness: 0.35,
+            ior: 1.42,
+            iridescence: 1,
+            iridescenceIOR: 1.7,
+            iridescenceThicknessRange: [180, 820],
+            clearcoat: 1,
+            clearcoatRoughness: 0.05,
+          });
+          const shell = new THREE.Mesh(shellGeo, shellMat);
+          shell.renderOrder = 2;
+
+          const screenGeo = new RoundedBoxGeometry(0.58, 0.88, 0.045, 3, 0.04);
+          const screenMat = new THREE.MeshPhysicalMaterial({
+            map: createAppScreenTexture(),
+            metalness: 0.35,
+            roughness: 0.16,
+            iridescence: 1,
+            iridescenceIOR: 1.8,
+            iridescenceThicknessRange: [250, 900],
+            clearcoat: 1,
+          });
+          const screen = new THREE.Mesh(screenGeo, screenMat);
+
+          // Dynamic Island / camera notch pill at top of screen
+          const islandGeo = new RoundedBoxGeometry(0.18, 0.05, 0.06, 2, 0.022);
+          const islandMat = new THREE.MeshPhysicalMaterial({
+            color: 0x1a2668,
+            metalness: 0.3,
+            roughness: 0.2,
+            clearcoat: 1,
+          });
+          const island = new THREE.Mesh(islandGeo, islandMat);
+          island.position.set(0, 0.34, 0.015);
+
+          // Steel dual lens rings on back/front accent
+          const lensGeo = new THREE.TorusGeometry(0.055, 0.018, 16, 32);
+          const lens1 = new THREE.Mesh(lensGeo, steelMat);
+          lens1.position.set(-0.14, 0.16, 0.025);
+          const lens2 = new THREE.Mesh(lensGeo, steelMat);
+          lens2.position.set(0.14, 0.16, 0.025);
+
+          g.add(screen, island, lens1, lens2, shell, makeLoop(0.6));
+          return g;
+        }
+
+        // Charm 2: Cobalt neural bead end
+        function buildBeadEndMesh() {
+          const g = new THREE.Group();
+          const bead = new THREE.Mesh(new THREE.SphereGeometry(0.085, 24, 24), cobaltMat);
+          g.add(bead);
+          return g;
+        }
+
+        // Charm 3: Iridescent pearl ring
+        function buildPearlRingMesh() {
+          const g = new THREE.Group();
+          const pearlGeo = new THREE.TorusGeometry(0.33, 0.15, 36, 72);
+          const pearlMat = new THREE.MeshPhysicalMaterial({
+            color: 0xf7f4f2,
+            metalness: 0.05,
+            roughness: 0.26,
+            iridescence: 0.9,
+            iridescenceIOR: 1.35,
+            iridescenceThicknessRange: [300, 700],
+            sheen: 1,
+            sheenColor: new THREE.Color(0xffe6f6),
+            sheenRoughness: 0.4,
+            clearcoat: 1,
+            clearcoatRoughness: 0.12,
+          });
+          g.add(new THREE.Mesh(pearlGeo, pearlMat), makeLoop(0.56));
+          return g;
+        }
+
+        // Charm 4: Orange 3D Letter "N" (Zxtni Studio)
+        function buildLetterNMesh() {
+          const g = new THREE.Group();
+          const textGeo = new TextGeometry('N', {
+            font: helvetikerFont,
+            size: 0.74,
+            depth: 0.1,
+            curveSegments: 10,
+            bevelEnabled: true,
+            bevelThickness: 0.1,
+            bevelSize: 0.055,
+            bevelSegments: 8,
+          });
+          textGeo.computeBoundingBox();
+          textGeo.center();
+          const nMat = new THREE.MeshPhysicalMaterial({
+            color: 0xff5512,
+            roughness: 0.22,
+            clearcoat: 1,
+            clearcoatRoughness: 0.06,
+          });
+          g.add(new THREE.Mesh(textGeo, nMat), makeLoop(0.54));
+          return g;
+        }
+
+        // Charm 5: Brushed steel access key
+        function buildAccessKeyMesh() {
+          const g = new THREE.Group();
+          const shape = new THREE.Shape();
+          shape.absarc(0, 0.36, 0.21, -0.32 * Math.PI, 1.32 * Math.PI, false);
+          shape.lineTo(-0.06, 0.12);
+          shape.lineTo(-0.06, -0.62);
+          shape.lineTo(0.01, -0.7);
+          shape.lineTo(0.06, -0.66);
+          shape.lineTo(0.11, -0.6);
+          shape.lineTo(0.065, -0.52);
+          shape.lineTo(0.11, -0.45);
+          shape.lineTo(0.065, -0.37);
+          shape.lineTo(0.11, -0.3);
+          shape.lineTo(0.065, -0.22);
+          shape.lineTo(0.11, -0.14);
+          shape.lineTo(0.06, -0.08);
+          shape.lineTo(0.06, 0.12);
+          shape.closePath();
+
+          const hole = new THREE.Path();
+          hole.absarc(0, 0.44, 0.055, 0, Math.PI * 2, true);
+          shape.holes.push(hole);
+
+          const keyGeo = new THREE.ExtrudeGeometry(shape, {
+            depth: 0.045,
+            bevelEnabled: true,
+            bevelThickness: 0.012,
+            bevelSize: 0.012,
+            bevelSegments: 3,
+            curveSegments: 28,
+          });
+          keyGeo.computeBoundingBox();
+          const cz = (keyGeo.boundingBox.min.z + keyGeo.boundingBox.max.z) / 2;
+          keyGeo.translate(0, 0.065, -cz);
+
+          const keyMat = new THREE.MeshPhysicalMaterial({
+            color: 0xe4e6ea,
+            metalness: 1,
+            roughness: 0.16,
+            clearcoat: 0.4,
+          });
+          g.add(new THREE.Mesh(keyGeo, keyMat), makeLoop(0.6, 0.07));
+          return g;
+        }
+
+        // Rapier Physics World
+        const world = new RAPIER.World({ x: 0, y: -9.81, z: 0 });
+        const GRP_NONE = 0;
+        const GRP_TAGS = 1;
+        const GRP_CHAIN = 2;
+        const groupMask = (memBit, filtMask) => (((1 << memBit) << 16) | filtMask) >>> 0;
+
+        const GROUP_TAGS_TAGS = groupMask(GRP_TAGS, 1 << GRP_TAGS);
+        const GROUP_CHAIN_NONE = groupMask(GRP_CHAIN, 1 << GRP_NONE);
+        const GROUP_RING_BOTH = groupMask(GRP_CHAIN, (1 << GRP_TAGS) | (1 << GRP_CHAIN));
+
+        const startRingGeo = new THREE.TorusGeometry(0.12, 0.0144, 14, 32);
+        const endRingGeo = new THREE.TorusGeometry(0.08, 0.0096, 14, 32);
+        const ovalLinkGeo = new THREE.TorusGeometry(0.062, 0.02, 12, 28);
+        ovalLinkGeo.scale(1, 1.5, 1);
+        const beadLinkGeo = new THREE.SphereGeometry(0.068, 20, 20);
+
+        const CHARM_SPECS = [
+          {
+            name: 'mobileApp',
+            thetaDeg: -50,
+            phiDeg: -64,
+            z: -0.2,
+            collider: { type: 'cuboid', hx: 0.42, hy: 0.52, hz: 0.15 },
+            density: 1.4,
+            offset: 0.64,
+            links: 8,
+            linkLen: 0.06,
+            isBeads: false,
+            trailColor: 0x6c8dff,
+            trailHalfWidth: 0.16,
+            trailAnchorY: -0.44,
+            mesh: buildMobileAppCharm(),
+          },
+          {
+            name: 'beads',
+            thetaDeg: -18,
+            phiDeg: -16,
+            z: 0.4,
+            collider: { type: 'ball', r: 0.12 },
+            density: 30,
+            offset: 0.22,
+            links: 9,
+            linkLen: 0.135,
+            isBeads: true,
+            trailColor: 0x1430e0,
+            trailHalfWidth: 0.08,
+            trailAnchorY: -0.02,
+            mesh: buildBeadEndMesh(),
+          },
+          {
+            name: 'pearl',
+            thetaDeg: 14,
+            phiDeg: 10,
+            z: 0.8,
+            collider: { type: 'cuboid', hx: 0.5, hy: 0.5, hz: 0.12 },
+            density: 1.4,
+            offset: 0.62,
+            links: 9,
+            linkLen: 0.06,
+            isBeads: false,
+            trailColor: 0x9b82ff,
+            trailHalfWidth: 0.15,
+            trailAnchorY: -0.38,
+            mesh: buildPearlRingMesh(),
+          },
+          {
+            name: 'letterN',
+            thetaDeg: 40,
+            phiDeg: 46,
+            z: 0.15,
+            collider: { type: 'cuboid', hx: 0.42, hy: 0.48, hz: 0.12 },
+            density: 1.4,
+            offset: 0.6,
+            links: 10,
+            linkLen: 0.06,
+            isBeads: false,
+            trailColor: 0xff5512,
+            trailHalfWidth: 0.15,
+            trailAnchorY: -0.34,
+            mesh: buildLetterNMesh(),
+          },
+          {
+            name: 'key',
+            thetaDeg: 84,
+            phiDeg: 88,
+            z: -0.25,
+            collider: { type: 'cuboid', hx: 0.22, hy: 0.64, hz: 0.05 },
+            density: 4,
+            offset: 0.7,
+            links: 9,
+            linkLen: 0.06,
+            isBeads: false,
+            trailColor: 0x6f87a8,
+            trailHalfWidth: 0.11,
+            trailAnchorY: -0.6,
+            mesh: buildAccessKeyMesh(),
+          },
+        ];
+
+        const allBodies = [];
+        const chains = [];
+        const charmBodies = [];
+
+        function createDynamicBody(x, y, z) {
+          const desc = RAPIER.RigidBodyDesc.dynamic()
+            .setTranslation(x, y, z)
+            .setLinearDamping(2.3)
+            .setAngularDamping(2.9)
+            .setCanSleep(true);
+          const body = world.createRigidBody(desc);
+          allBodies.push(body);
+          return body;
+        }
+
+        for (const spec of CHARM_SPECS) {
+          const thetaRad = ((spec.thetaDeg - 90) * Math.PI) / 180;
+          const bx = ringCenter.x + 0.5 * Math.cos(thetaRad);
+          const by = ringCenter.y + 0.5 * Math.sin(thetaRad);
+
+          const anchorBody = world.createRigidBody(RAPIER.RigidBodyDesc.fixed().setTranslation(bx, by, 0));
+
+          const startRingBody = createDynamicBody(bx, by, 0);
+          const startCol = RAPIER.ColliderDesc.cuboid(0.12 * 0.12, 0.12, 0.12)
+            .setDensity(5)
+            .setCollisionGroups(GROUP_RING_BOTH);
+          world.createCollider(startCol, startRingBody);
+          world.createImpulseJoint(
+            RAPIER.JointData.spherical({ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }),
+            anchorBody,
+            startRingBody,
+            true
+          );
+
+          const startRingMesh = new THREE.Mesh(startRingGeo, steelMat);
+          startRingMesh.rotation.y = Math.PI / 2;
+          const startRingGroup = new THREE.Group();
+          startRingGroup.add(startRingMesh);
+          scene.add(startRingGroup);
+
+          const linkBodies = [];
+          const smoothedDirs = [];
+          for (let i = 0; i < spec.links; i++) {
+            const lb = createDynamicBody(bx + 0.5, by, 0);
+            const lc = RAPIER.ColliderDesc.ball(0.1)
+              .setDensity(1)
+              .setCollisionGroups(GROUP_CHAIN_NONE);
+            world.createCollider(lc, lb);
+            if (i === 0) {
+              world.createImpulseJoint(
+                RAPIER.JointData.spherical({ x: 0, y: -0.12, z: 0 }, { x: 0, y: 0, z: 0 }),
+                startRingBody,
+                lb,
+                true
+              );
+            } else {
+              world.createImpulseJoint(
+                RAPIER.JointData.rope(spec.linkLen, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }),
+                linkBodies[i - 1],
+                lb,
+                true
+              );
+            }
+            linkBodies.push(lb);
+            smoothedDirs.push(new THREE.Vector3(0, -1, 0));
+          }
+
+          const linkInstanced = new THREE.InstancedMesh(
+            spec.isBeads ? beadLinkGeo : ovalLinkGeo,
+            spec.isBeads ? cobaltMat : linkSteelMat,
+            spec.links
+          );
+          linkInstanced.frustumCulled = false;
+          scene.add(linkInstanced);
+
+          const endRingBody = createDynamicBody(bx, by, 0);
+          const endCol = RAPIER.ColliderDesc.cuboid(0.08 * 0.12, 0.08, 0.08)
+            .setDensity(5)
+            .setCollisionGroups(GROUP_RING_BOTH);
+          world.createCollider(endCol, endRingBody);
+          world.createImpulseJoint(
+            RAPIER.JointData.spherical({ x: 0, y: -0.08, z: 0 }, { x: 0, y: 0, z: 0 }),
+            linkBodies[linkBodies.length - 1],
+            endRingBody,
+            true
+          );
+
+          const endRingMesh = new THREE.Mesh(endRingGeo, steelMat);
+          endRingMesh.rotation.y = Math.PI / 2;
+          const endRingGroup = new THREE.Group();
+          endRingGroup.add(endRingMesh);
+          scene.add(endRingGroup);
+
+          const charmBody = createDynamicBody(bx, by, spec.z);
+          const charmCol =
+            spec.collider.type === 'ball'
+              ? RAPIER.ColliderDesc.ball(spec.collider.r)
+              : RAPIER.ColliderDesc.cuboid(spec.collider.hx, spec.collider.hy, spec.collider.hz);
+          charmCol.setDensity(spec.density).setCollisionGroups(GROUP_TAGS_TAGS);
+          world.createCollider(charmCol, charmBody);
+          world.createImpulseJoint(
+            RAPIER.JointData.fixed(
+              { x: 0, y: 0, z: 0 },
+              { x: 0, y: 0, z: 0, w: 1 },
+              { x: 0, y: spec.offset, z: 0 },
+              { x: 0, y: 0, z: 0, w: 1 }
+            ),
+            endRingBody,
+            charmBody,
+            true
+          );
+
+          const phiRad = ((spec.phiDeg - 90) * Math.PI) / 180;
+          charmBody.addForce(
+            {
+              x: 0.7 * Math.cos(phiRad),
+              y: 0.7 * Math.sin(phiRad),
+              z: spec.z,
+            },
+            true
+          );
+
+          scene.add(spec.mesh);
+          charmBodies.push(charmBody);
+          chains.push({
+            spec,
+            startRingBody,
+            startRingGroup,
+            linkBodies,
+            smoothedDirs,
+            linkInstanced,
+            endRingBody,
+            endRingGroup,
+            charmBody,
+            charmMesh: spec.mesh,
+          });
+        }
+
+        const _vForward = new THREE.Vector3();
+        const _vDir = new THREE.Vector3();
+        const _vPosA = new THREE.Vector3();
+        const _vPosB = new THREE.Vector3();
+        const _vScale = new THREE.Vector3(1, 1, 1);
+        const _qBody = new THREE.Quaternion();
+        const _qCorr = new THREE.Quaternion();
+        const _qAlign = new THREE.Quaternion();
+        const _qTwist = new THREE.Quaternion();
+        const _qIdent = new THREE.Quaternion();
+        const _mat4 = new THREE.Matrix4();
+        const _raycaster = new THREE.Raycaster();
+        const _ndc = new THREE.Vector2();
+        const _planeZ0 = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        const _hitPoint = new THREE.Vector3();
+        const _camPos = new THREE.Vector3();
+        const _trailTan = new THREE.Vector3();
+        const _trailView = new THREE.Vector3();
+        const _trailSide = new THREE.Vector3();
+        const _trailAnchorWorld = new THREE.Vector3();
+        const _trailBodyPos = new THREE.Vector3();
+        const _trailBodyQuat = new THREE.Quaternion();
+        const WORLD_Y = new THREE.Vector3(0, 1, 0);
+        const LOCAL_Z = new THREE.Vector3(0, 0, 1);
+        const UP_Y = new THREE.Vector3(0, 1, 0);
+        const YAW_15 = THREE.MathUtils.degToRad(15);
+        const YAW_12 = THREE.MathUtils.degToRad(12);
+
+        // Subtle billboarded ribbon trails behind mouse-pushed charms
+        const TRAIL_SAMPLES = 34;
+        const TRAIL_VERT_SHADER = `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `;
+        const TRAIL_FRAG_SHADER = `
+          uniform vec3 uColor;
+          uniform float uOpacity;
+          varying vec2 vUv;
+          void main() {
+            float crossFade = smoothstep(0.0, 0.45, vUv.y) * smoothstep(1.0, 0.55, vUv.y);
+            float alongFade = pow(clamp(1.0 - vUv.x, 0.0, 1.0), 1.35) * smoothstep(0.0, 0.05, vUv.x);
+            float alpha = crossFade * alongFade * uOpacity;
+            if (alpha < 0.004) discard;
+            gl_FragColor = vec4(uColor, alpha);
+          }
+        `;
+
+        const trailIndices = new Uint16Array((TRAIL_SAMPLES - 1) * 6);
+        for (let i = 0; i < TRAIL_SAMPLES - 1; i++) {
+          const a = i * 2;
+          const b = a + 1;
+          const c = a + 2;
+          const d = a + 3;
+          const base = i * 6;
+          trailIndices[base] = a;
+          trailIndices[base + 1] = b;
+          trailIndices[base + 2] = c;
+          trailIndices[base + 3] = b;
+          trailIndices[base + 4] = d;
+          trailIndices[base + 5] = c;
+        }
+        const sharedTrailIndexAttr = new THREE.BufferAttribute(trailIndices, 1);
+        const sharedTrailUVs = new Float32Array(TRAIL_SAMPLES * 2 * 2);
+        for (let i = 0; i < TRAIL_SAMPLES; i++) {
+          const u = i / (TRAIL_SAMPLES - 1);
+          const o = i * 4;
+          sharedTrailUVs[o] = u;
+          sharedTrailUVs[o + 1] = 0;
+          sharedTrailUVs[o + 2] = u;
+          sharedTrailUVs[o + 3] = 1;
+        }
+        const sharedTrailUvAttr = new THREE.BufferAttribute(sharedTrailUVs, 2);
+
+        const charmTrails = chains.map((ch) => {
+          const posArray = new Float32Array(TRAIL_SAMPLES * 2 * 3);
+          const posAttr = new THREE.BufferAttribute(posArray, 3);
+          posAttr.setUsage(THREE.DynamicDrawUsage);
+
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', posAttr);
+          geo.setAttribute('uv', sharedTrailUvAttr);
+          geo.setIndex(sharedTrailIndexAttr);
+
+          const material = new THREE.ShaderMaterial({
+            uniforms: {
+              uColor: { value: new THREE.Color(ch.spec.trailColor) },
+              uOpacity: { value: 0 },
+            },
+            vertexShader: TRAIL_VERT_SHADER,
+            fragmentShader: TRAIL_FRAG_SHADER,
+            transparent: true,
+            depthWrite: false,
+            depthTest: true,
+            side: THREE.DoubleSide,
+          });
+
+          const mesh = new THREE.Mesh(geo, material);
+          mesh.visible = false;
+          mesh.frustumCulled = false;
+          mesh.renderOrder = 0;
+          scene.add(mesh);
+
+          const history = Array.from({ length: TRAIL_SAMPLES }, () => new THREE.Vector3());
+          return {
+            charmBody: ch.charmBody,
+            baseHalfWidth: ch.spec.trailHalfWidth,
+            anchorY: ch.spec.trailAnchorY,
+            mesh,
+            material,
+            posArray,
+            posAttr,
+            history,
+            heat: 0,
+            pushIntensity: 0,
+          };
+        });
+
+        function clampBodyYaw(body, limitRad, slerpToIdentity) {
+          const r = body.rotation();
+          _qBody.set(r.x, r.y, r.z, r.w);
+          _vForward.copy(LOCAL_Z).applyQuaternion(_qBody);
+          const yaw = Math.atan2(_vForward.x, _vForward.z);
+          let changed = false;
+
+          if (Math.abs(yaw) > limitRad) {
+            const excess = yaw - Math.sign(yaw) * limitRad;
+            _qCorr.setFromAxisAngle(WORLD_Y, -excess);
+            _qBody.premultiply(_qCorr).normalize();
+            const av = body.angvel();
+            body.setAngvel({ x: av.x, y: 0, z: av.z }, false);
+            changed = true;
+          }
+
+          if (slerpToIdentity && !body.isSleeping()) {
+            _qBody.slerp(_qIdent, 0.001);
+            changed = true;
+          }
+
+          if (changed) {
+            body.setRotation({ x: _qBody.x, y: _qBody.y, z: _qBody.z, w: _qBody.w }, false);
+          }
+        }
+
+        function syncVisualsFromPhysics(dt) {
+          for (const ch of chains) {
+            const srPos = ch.startRingBody.translation();
+            const srRot = ch.startRingBody.rotation();
+            ch.startRingGroup.position.set(srPos.x, srPos.y, srPos.z);
+            ch.startRingGroup.quaternion.set(srRot.x, srRot.y, srRot.z, srRot.w);
+
+            const erPos = ch.endRingBody.translation();
+            const erRot = ch.endRingBody.rotation();
+            ch.endRingGroup.position.set(erPos.x, erPos.y, erPos.z);
+            ch.endRingGroup.quaternion.set(erRot.x, erRot.y, erRot.z, erRot.w);
+
+            const cPos = ch.charmBody.translation();
+            const cRot = ch.charmBody.rotation();
+            ch.charmMesh.position.set(cPos.x, cPos.y, cPos.z);
+            ch.charmMesh.quaternion.set(cRot.x, cRot.y, cRot.z, cRot.w);
+
+            const n = ch.linkBodies.length;
+            const alpha = Math.min(1, 10 * dt);
+            for (let i = 0; i < n; i++) {
+              const t0 = ch.linkBodies[i].translation();
+              _vPosA.set(t0.x, t0.y, t0.z);
+
+              if (i < n - 1) {
+                const t1 = ch.linkBodies[i + 1].translation();
+                _vPosB.set(t1.x, t1.y, t1.z);
+                _vDir.subVectors(_vPosB, _vPosA);
+              } else {
+                const tPrev = ch.linkBodies[i - 1].translation();
+                _vPosB.set(tPrev.x, tPrev.y, tPrev.z);
+                _vDir.subVectors(_vPosA, _vPosB);
+              }
+
+              if (_vDir.lengthSq() > 1e-8) {
+                _vDir.normalize();
+                ch.smoothedDirs[i].lerp(_vDir, alpha).normalize();
+              }
+
+              if (ch.spec.isBeads) {
+                _qAlign.identity();
+              } else {
+                const dot = UP_Y.dot(ch.smoothedDirs[i]);
+                if (dot < -0.9999) {
+                  _qAlign.setFromAxisAngle(LOCAL_Z, Math.PI);
+                } else {
+                  _qAlign.setFromUnitVectors(UP_Y, ch.smoothedDirs[i]);
+                }
+                const twistRad = THREE.MathUtils.degToRad(i * 16 + (i % 2 === 1 ? 90 : 0));
+                _qTwist.setFromAxisAngle(UP_Y, twistRad);
+                _qAlign.multiply(_qTwist);
+              }
+
+              _mat4.compose(_vPosA, _qAlign, _vScale);
+              ch.linkInstanced.setMatrixAt(i, _mat4);
+            }
+            ch.linkInstanced.instanceMatrix.needsUpdate = true;
+          }
+        }
+
+        let pointerInside = false;
+        let pointerClientX = 0;
+        let pointerClientY = 0;
+
+        if (!reducedMotion) {
+          window.addEventListener(
+            'pointermove',
+            (e) => {
+              pointerClientX = e.clientX;
+              pointerClientY = e.clientY;
+              const rect = canvas.getBoundingClientRect();
+              pointerInside = e.clientY >= rect.top && e.clientY <= rect.bottom;
+            },
+            { passive: true }
+          );
+        }
+
+        function applyMousePush(stepDt) {
+          if (!pointerInside || reducedMotion) return;
+          const rect = canvas.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) return;
+          if (pointerClientY < rect.top || pointerClientY > rect.bottom) {
+            pointerInside = false;
+            return;
+          }
+          _ndc.x = ((pointerClientX - rect.left) / rect.width) * 2 - 1;
+          _ndc.y = -((pointerClientY - rect.top) / rect.height) * 2 + 1;
+          _raycaster.setFromCamera(_ndc, camera);
+          if (!_raycaster.ray.intersectPlane(_planeZ0, _hitPoint)) return;
+
+          for (let i = 0; i < charmBodies.length; i++) {
+            const body = charmBodies[i];
+            const p = body.translation();
+            const dx = p.x - _hitPoint.x;
+            const dy = p.y - _hitPoint.y;
+            const dz = p.z - _hitPoint.z;
+            const d = Math.hypot(dx, dy, dz);
+            if (d > 0 && d < 2) {
+              const falloff = Math.pow(1 - d / 2, 2);
+              const factor = (4.4 * falloff * stepDt) / d;
+              body.applyImpulse({ x: dx * factor, y: dy * factor, z: dz * factor }, true);
+              charmTrails[i].pushIntensity = Math.max(
+                charmTrails[i].pushIntensity,
+                Math.min(1, 0.42 + falloff * 0.85)
+              );
+            }
+          }
+        }
+
+        function stepCharmTrails(stepDt) {
+          for (let i = 0; i < charmTrails.length; i++) {
+            const tr = charmTrails[i];
+            const pos = tr.charmBody.translation();
+            const rot = tr.charmBody.rotation();
+            const vel = tr.charmBody.linvel();
+            const speed = Math.hypot(vel.x, vel.y, vel.z);
+            const wasInactive = tr.heat <= 0.004;
+
+            if (tr.pushIntensity > 0) {
+              tr.heat = Math.max(tr.heat, tr.pushIntensity);
+              tr.pushIntensity = 0;
+            } else if (tr.heat > 0) {
+              const decayRate = speed > 0.25 ? 0.78 : 1.75;
+              tr.heat *= Math.exp(-decayRate * stepDt);
+              if (tr.heat < 0.004) tr.heat = 0;
+            }
+
+            if (tr.heat <= 0) continue;
+
+            _trailBodyPos.set(pos.x, pos.y, pos.z);
+            _trailBodyQuat.set(rot.x, rot.y, rot.z, rot.w);
+            _trailAnchorWorld.set(0, tr.anchorY, -0.06).applyQuaternion(_trailBodyQuat).add(_trailBodyPos);
+
+            if (wasInactive) {
+              for (let k = 0; k < TRAIL_SAMPLES; k++) {
+                tr.history[k].copy(_trailAnchorWorld);
+              }
+            } else {
+              for (let k = TRAIL_SAMPLES - 1; k > 0; k--) {
+                tr.history[k].copy(tr.history[k - 1]);
+              }
+              tr.history[0].copy(_trailAnchorWorld);
+            }
+          }
+        }
+
+        function syncTrailMeshes() {
+          camera.getWorldPosition(_camPos);
+          for (let i = 0; i < charmTrails.length; i++) {
+            const tr = charmTrails[i];
+            if (tr.heat <= 0.004) {
+              tr.mesh.visible = false;
+              continue;
+            }
+
+            const vel = tr.charmBody.linvel();
+            const speed = Math.hypot(vel.x, vel.y, vel.z);
+            const speedScale = Math.min(1, Math.max(0.28, speed * 0.65));
+            const opacity = Math.min(0.52, tr.heat * (0.22 + Math.min(0.32, speed * 0.18)));
+            if (opacity < 0.006) {
+              tr.mesh.visible = false;
+              continue;
+            }
+
+            tr.mesh.visible = true;
+            tr.material.uniforms.uOpacity.value = opacity;
+
+            const scale = tr.baseHalfWidth * tr.heat * speedScale;
+            const pts = tr.history;
+            const out = tr.posArray;
+
+            for (let k = 0; k < TRAIL_SAMPLES; k++) {
+              const curr = pts[k];
+              if (k === 0) {
+                _trailTan.subVectors(curr, pts[1]);
+              } else if (k === TRAIL_SAMPLES - 1) {
+                _trailTan.subVectors(pts[k - 1], curr);
+              } else {
+                _trailTan.subVectors(pts[k - 1], pts[k + 1]);
+              }
+
+              if (_trailTan.lengthSq() < 1e-8) {
+                _trailTan.set(0, -1, 0);
+              } else {
+                _trailTan.normalize();
+              }
+
+              _trailView.subVectors(_camPos, curr);
+              if (_trailView.lengthSq() < 1e-8) {
+                _trailView.set(0, 0, 1);
+              } else {
+                _trailView.normalize();
+              }
+
+              _trailSide.crossVectors(_trailTan, _trailView);
+              if (_trailSide.lengthSq() < 1e-8) {
+                _trailSide.set(1, 0, 0);
+              } else {
+                _trailSide.normalize();
+              }
+
+              const tNorm = k / (TRAIL_SAMPLES - 1);
+              const headEase = k === 0 ? 0.72 : 1;
+              const hw = k === TRAIL_SAMPLES - 1 ? 0 : scale * headEase * Math.pow(1 - tNorm, 1.25);
+
+              const vIdx = k * 6;
+              out[vIdx] = curr.x + _trailSide.x * hw;
+              out[vIdx + 1] = curr.y + _trailSide.y * hw;
+              out[vIdx + 2] = curr.z + _trailSide.z * hw;
+              out[vIdx + 3] = curr.x - _trailSide.x * hw;
+              out[vIdx + 4] = curr.y - _trailSide.y * hw;
+              out[vIdx + 5] = curr.z - _trailSide.z * hw;
+            }
+            tr.posAttr.needsUpdate = true;
+          }
+        }
+
+        if (reducedMotion) {
+          for (let s = 0; s < 240; s++) {
+            world.step();
+          }
+          for (const ch of chains) {
+            clampBodyYaw(ch.startRingBody, YAW_15, false);
+            clampBodyYaw(ch.endRingBody, YAW_12, false);
+            clampBodyYaw(ch.charmBody, YAW_12, true);
+          }
+          syncVisualsFromPhysics(1);
+          renderer.render(scene, camera);
+          sceneFirstFrameReady = true;
+          document.body.dataset.heroReady = 'true';
+          window.addEventListener('resize', () => {
+            updateHeroViewport();
+            renderer.render(scene, camera);
+          });
+          return;
+        }
+
+        for (let s = 0; s < 90; s++) {
+          world.step();
+        }
+        syncVisualsFromPhysics(1 / 60);
+
+        start3DEntranceFn = () => {
+          const proxy = { progress: 0 };
+          let dropped = false;
+          for (const b of allBodies) b.setGravityScale(-0.25, true);
+          const tl = gsap.timeline({ defaults: { duration: 1.5, delay: 0.5, ease: 'elastic.out(1, 1)' } });
+          tl.to(rig.position, { y: 0 }, 0);
+          tl.to(
+            proxy,
+            {
+              progress: 1,
+              ease: 'none',
+              onUpdate: () => {
+                if (!dropped) {
+                  if (proxy.progress < 1) {
+                    for (const b of allBodies) b.setGravityScale(-0.25, true);
+                  } else {
+                    dropped = true;
+                    for (const b of allBodies) b.setGravityScale(1, true);
+                  }
+                }
+              },
+              onComplete: () => {
+                dropped = true;
+                for (const b of allBodies) b.setGravityScale(1, true);
+              },
+            },
+            0
+          );
+        };
+
+        let heroVisible = true;
+        let frameId = 0;
+        let lastTs = performance.now();
+        let accumulator = 0;
+        const FIXED_DT = 1 / 60;
+
+        function afterDraw(cb) {
+          const gl = renderer.getContext();
+          const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+          gl.flush();
+          const poll = () => {
+            const state = sync && gl.getSyncParameter(sync, gl.SYNC_STATUS);
+            if (state === gl.UNSIGNALED) {
+              frameId = window.setTimeout(poll, 5);
+            } else {
+              if (sync) gl.deleteSync(sync);
+              frameId = window.setTimeout(cb, 80);
+            }
+          };
+          frameId = window.setTimeout(poll, 5);
+        }
+
+        function tick() {
+          if (!heroVisible) return;
+          const now = performance.now();
+          const rawDt = Math.min((now - lastTs) / 1000, 0.1);
+          lastTs = now;
+
+          let scrollDepthNorm = Math.min(1, Math.max(0, window.scrollY / Math.max(1, heroEl.offsetHeight || 810)));
+          if (entranceStarted) {
+            const targetZ = 10 - scrollDepthNorm * 1.45;
+            const targetRotX = -scrollDepthNorm * 0.1;
+            rig.position.z += (targetZ - rig.position.z) * Math.min(1, rawDt * 8);
+            rig.rotation.x += (targetRotX - rig.rotation.x) * Math.min(1, rawDt * 8);
+          }
+
+          accumulator += rawDt;
+          while (accumulator >= FIXED_DT) {
+            if (rawDt <= 0.1) applyMousePush(FIXED_DT);
+            if (Math.abs(globalScrollVelocity) > 60 && heroVisible) {
+              const windX = Math.max(-0.08, Math.min(0.08, -globalScrollVelocity * 0.00003));
+              const windY = Math.max(-0.05, Math.min(0.05, -globalScrollVelocity * 0.000018));
+              for (let i = 0; i < charmBodies.length; i++) {
+                charmBodies[i].applyImpulse({ x: windX * (i % 2 === 0 ? 1 : 0.7), y: windY, z: 0.01 }, true);
+                charmTrails[i].pushIntensity = Math.max(charmTrails[i].pushIntensity, 0.38);
+              }
+            }
+            world.step();
+            stepCharmTrails(FIXED_DT);
+            accumulator -= FIXED_DT;
+          }
+
+          for (const ch of chains) {
+            clampBodyYaw(ch.startRingBody, YAW_15, false);
+            clampBodyYaw(ch.endRingBody, YAW_12, false);
+            clampBodyYaw(ch.charmBody, YAW_12, true);
+          }
+
+          syncVisualsFromPhysics(Math.max(rawDt, FIXED_DT));
+          syncTrailMeshes();
+          renderer.render(scene, camera);
+
+          if (!sceneFirstFrameReady) {
+            sceneFirstFrameReady = true;
+            document.body.dataset.heroReady = 'true';
+            tryExitLoader();
+          }
+
+          if (isSoftwareGl) {
+            afterDraw(tick);
+          } else {
+            frameId = requestAnimationFrame(tick);
+          }
+        }
+
+        const heroObserver = new IntersectionObserver(
+          (entries) => {
+            const wasVisible = heroVisible;
+            heroVisible = entries[0].isIntersecting;
+            if (heroVisible && !wasVisible) {
+              lastTs = performance.now();
+              tick();
+            } else if (!heroVisible) {
+              cancelAnimationFrame(frameId);
+              clearTimeout(frameId);
+            }
+          },
+          { threshold: 0 }
+        );
+        heroObserver.observe(heroEl);
+
+        window.addEventListener('resize', updateHeroViewport);
+
+        renderer.render(scene, camera);
+        sceneFirstFrameReady = true;
+        document.body.dataset.heroReady = 'true';
+        tryExitLoader();
+
+        if (isSoftwareGl) {
+          afterDraw(tick);
+        } else {
+          frameId = requestAnimationFrame(tick);
+        }
+      }
+
+      initHero3D().catch((err) => {
+        console.error('Hero 3D initialization error:', err);
+        sceneFirstFrameReady = true;
+        tryExitLoader();
+      });
+    </script>
+  </body>
+</html>

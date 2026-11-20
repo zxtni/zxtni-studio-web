@@ -1,0 +1,8 @@
+{
+  "name": "Glaze — Crafted for Motion",
+  "description": "Glaze, the first video editor you can build on. Programmable motion graphics timeline and interactive studio tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
